@@ -22,4 +22,4 @@ http://modsim.hupfeld-software.de
 
 Dort befindet sich auch eine umfangreiche Sammlung mit Dynasys-Modellen.
 
-Dieses Repository stellt die Portierung nach OS X mittels [Lazarus](http://www.lazarus-ide.org) dar.
+Dieses Repository stellt die Portierung nach Mac OS X mittels [Lazarus](http://www.lazarus-ide.org) dar.
