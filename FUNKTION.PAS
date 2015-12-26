@@ -16,8 +16,11 @@
  *)
 
 unit Funktion;
+
+{$MODE Delphi}
+
 (*
-   Diverse Funktionen für den Parser
+   Diverse Funktionen fÃ¼r den Parser
    Autor: Walter Hupfeld
    Version: 2.0
    zuletzt bearbeitet:
@@ -106,7 +109,7 @@ End;
 
 
 Function intelligentes_Aufrunden(x : Double) : Double;
-{ Runden auf eine gültige Stelle, z.B. 2210 => 3000 }
+{ Runden auf eine gÃ¼ltige Stelle, z.B. 2210 => 3000 }
 Var i : Integer;
 	 negativ : Boolean;
 Begin
@@ -147,7 +150,7 @@ End;
 
 
 Function intelligentes_Abrunden(x : Double) : Double;
-{ Runden auf eine gültige Stelle, z.B. 2210 => 2000 }
+{ Runden auf eine gÃ¼ltige Stelle, z.B. 2210 => 2000 }
 Var i : Integer;
 	 negativ : Boolean;
 Begin
@@ -184,7 +187,7 @@ Begin
 End;
 
 Function intelligentes_Aufrunden2(x : Double) : Double;
-{ Runden auf zwei gültige Stellen, z.B. 2210 => 2300 }
+{ Runden auf zwei gÃ¼ltige Stellen, z.B. 2210 => 2300 }
 Var i : Integer;
 	negativ : Boolean;
 Begin
@@ -221,7 +224,7 @@ Begin
 End;
 
 Function intelligentes_Abrunden2(x : Double) : Double;
-{ Runden auf zwei gültige Stellen, z.B. 2210 => 2200 }
+{ Runden auf zwei gÃ¼ltige Stellen, z.B. 2210 => 2200 }
 Var i : Integer;
 	negativ : Boolean;
 Begin
@@ -260,7 +263,7 @@ End;
 Function Aufrunden_125(x : Double) : Double;
 Var i : Integer;
 	 negativ : Boolean;
-	 y : Double;
+//	 y : Double;
 
 Function Runden(x : Double) : Double;
 Begin

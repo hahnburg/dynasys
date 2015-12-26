@@ -1,0 +1,18 @@
+object ZeitkurveForm: TZeitkurveForm
+  Left = 197
+  Top = 32
+  Width = 510
+  Height = 343
+  Caption = 'Zeitdiagramm'
+  Font.Color = clWindowText
+  Font.Height = 13
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  FormStyle = fsMDIChild
+  PixelsPerInch = 96
+  Position = poDefault
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  TextHeight = 16
+end

@@ -17,12 +17,15 @@
 
 unit ZeitSelect;
 
+{$MODE Delphi}
+
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, StdCtrls, Tabs,
+uses unix, Classes, LCLType, Graphics, Forms, Controls, StdCtrls, ColorBox,
   Buttons, ExtCtrls,
   Liste,SimObjekt, Dialogs, ComCtrls, ImgList, Diagram, ErrorTxt;
-
+const
+  LB_ERR = -1;
 type
   TZeitkurveDlg = class(TForm)
     ButtonPanel: TPanel;
@@ -64,9 +67,9 @@ type
     procedure IncAllBtnClick(Sender: TObject);
     procedure ExAllBtnClick(Sender: TObject);
     procedure FormPaint(Sender: TObject);
-    procedure MoveSelected(List: TCustomListBox; Items: TStrings; maxItems:integer);
+    procedure MoveSelected(Listbox: TListBox; Items: TStrings; maxItems:integer);
     procedure SetItem(List: TListBox; Index: Integer);
-    function GetFirstSelection(List: TCustomListBox): Integer;
+    function GetFirstSelection(List: TListBox): Integer;
     procedure SetButtons;
   private
     SelCount:integer;
@@ -79,11 +82,34 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TZeitkurveDlg.FormCreate(Sender: TObject);
 begin
   SelCount:=0;
+end;
+
+procedure TZeitkurveDlg.FormPaint(Sender: TObject);
+var i : integer;
+begin
+  SrcList.items.clear;
+  SrcList.sorted:=false;
+  DstList.items.clear;
+
+  For i:=0 to ObjektListe.Count-1 do begin
+    if ObjektListe.items[i].key=ZustandId then
+      begin
+        DstList.items.add(ObjektListe.items[i].name);
+//         SrcList.items.add(ObjektListe.items[i].name);
+      end;
+  end;
+  For i:=0 to ObjektListe.Count-1 do begin
+    if (ObjektListe.items[i].key>0) and (ObjektListe.items[i].key<ZustandId)then
+         SrcList.items.add(ObjektListe.items[i].name)
+  end;
+
+  if ObjektListe.Count>0 then SrcList.selected[0]:=true;
+  SetButtons;
 end;
 
 procedure TZeitkurveDlg.IncludeBtnClick(Sender: TObject);
@@ -91,6 +117,7 @@ var
   Index: Integer;
 begin
   Index := GetFirstSelection(SrcList);
+  //*** here
   MoveSelected(SrcList, DstList.Items,Diagram.MaxGraph);
   Inc(SelCount);
   SetItem(SrcList, Index);
@@ -109,12 +136,18 @@ end;
 procedure TZeitkurveDlg.IncAllBtnClick(Sender: TObject);
 var
   I: Integer;
+  myStringList: TStringList;
 begin
+  myStringList:=TStringList.Create;
   for I := 0 to SrcList.Items.Count - 1 do
-    DstList.Items.AddObject(SrcList.Items[I],
+    myStringList.AddObject(SrcList.Items[I],
       SrcList.Items.Objects[I]);
+//must use  Assign ALLWAYS?!  ListBox1.Items.Assign(myStringList);
+  DstList.Items.Assign(myStringList);
   SrcList.Items.Clear;
-  SetItem(SrcList, 0);
+  myStringList.Free;
+  //neuzeichnen?
+//  SetItem(SrcList, 0);   //better: Assign(0);?!
 end;
 
 procedure TZeitkurveDlg.ExAllBtnClick(Sender: TObject);
@@ -127,34 +160,17 @@ begin
   SetItem(DstList, 0);
 end;
 
-procedure TZeitkurveDlg.FormPaint(Sender: TObject);
-var i : integer;
-begin
-  SrcList.items.clear;
-  SrcList.sorted:=false;
-  DstList.items.clear;
-  For i:=0 to ObjektListe.Count-1 do begin
-    if ObjektListe.items[i].key=ZustandId then
-         SrcList.items.add(ObjektListe.items[i].name)
-  end;
-  For i:=0 to ObjektListe.Count-1 do begin
-    if (ObjektListe.items[i].key>0) and (ObjektListe.items[i].key<ZustandId)then
-         SrcList.items.add(ObjektListe.items[i].name)
-  end;
-  if ObjektListe.Count>0 then SrcList.selected[0]:=true;
-  SetButtons;
-end;
-
-procedure TZeitkurveDlg.MoveSelected(List: TCustomListBox; Items: TStrings; maxItems:integer);
+procedure TZeitkurveDlg.MoveSelected(Listbox: TListBox; Items: TStrings; maxItems:integer);
 var
   I: Integer;
 begin
-  for I := List.Items.Count - 1 downto 0 do
-    if List.Selected[I] then begin
+  for I := Listbox.Items.Count - 1 downto 0 do
+    if Listbox.Selected[I] then begin
       if  (Items.count<maxItems) then
         begin
-          Items.AddObject(List.Items[I], List.Items.Objects[I]);
-          List.Items.Delete(I);
+          Items.AddObject(Listbox.Items[I], Listbox.Items.Objects[I]);
+//          Items.Add(Listbox.Items[I]);
+          Listbox.Items.Delete(I);
         end
       else
        MessageDlg(ErrorTxt30, mtInformation, [mbOk], 0);
@@ -175,7 +191,7 @@ begin
   ExAllBtn.Enabled := not DstEmpty;
 end;
 
-function TZeitkurveDlg.GetFirstSelection(List: TCustomListBox): Integer;
+function TZeitkurveDlg.GetFirstSelection(List: TListBox): Integer;
 begin
   for Result := 0 to List.Items.Count - 1 do
     if List.Selected[Result] then Exit;

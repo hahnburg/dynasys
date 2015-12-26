@@ -19,7 +19,7 @@ unit Dynabout;
 
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, StdCtrls,
+uses unix, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ExtCtrls;
 
 type
@@ -42,7 +42,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 end.
 

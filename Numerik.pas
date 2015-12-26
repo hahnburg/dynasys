@@ -17,8 +17,10 @@
 
 unit Numerik;
 
+{$MODE Delphi}
+
 (*
-   Numerikdialog für Simulation
+   Numerikdialog fÃ¼r Simulation
    Version: 2.0
    Autor: Walter Hupfeld
    zuletzt bearbeitet:
@@ -27,7 +29,7 @@ unit Numerik;
 
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, Buttons,
+uses unix, Classes, Graphics, Forms, Controls, Buttons,
   StdCtrls, ExtCtrls, SysUtils, Dialogs,
   ErrorTxt;
 
@@ -65,7 +67,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TNumerikDlg.FormActivate(Sender: TObject);
 begin

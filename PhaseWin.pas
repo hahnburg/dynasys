@@ -17,6 +17,8 @@
 
 unit PhaseWin;
 
+{$MODE Delphi}
+
 (*
   Zeichnet das Phasendiagramm
   HoleWerte, InitWerte, ExitWerte werden von Simulation aufgerufen.
@@ -27,10 +29,10 @@ unit PhaseWin;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, StdCtrls, Buttons, ColorGrd, Menus, Printers, ClipBrd, Dialogs,
-  ExtCtrls,
-  Funktion, PhaseSelect, Liste, Diagram, Numerik;
+  SysUtils, unix, Messages, Classes, Graphics, Controls,
+  Forms, StdCtrls, Buttons, LCLType, LCLProc, LCLIntf, LResources,
+  (* ColorGrd ,*) Menus, Printers, ClipBrd, Dialogs, Diagram,
+  ExtCtrls, Funktion, PhaseSelect, Liste, Numerik;
 
 
 type
@@ -76,11 +78,11 @@ type
 
   public
 	 { Public declarations }
-   isClosed: bool;
+   isClosed: Boolean;
 	 Origin, MovePt: TPoint;
 	 CurrentFile: string;
         procedure HoleWerte(Zeit:Double);
-        // Eigentlich eine blöde Bezeichnung. Prozedur liefert Wert zum Zeitpunkt
+        // Eigentlich eine blÃ¶de Bezeichnung. Prozedur liefert Wert zum Zeitpunkt
         // Zeit von Simulation
         Procedure ExitWerte(Minimum,Maximum:double);
         procedure InitWerte(Schritte:integer);
@@ -92,7 +94,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 
 (* ====================================================================== *)
@@ -100,7 +102,7 @@ implementation
 procedure TPhaseForm.FormCreate(Sender: TObject);
 var
   Bitmap: TBitmap;
-  Placement : TWindowPlacement;
+  //Placement : TWindowPlacement;
   i : integer;
 
 begin
@@ -118,7 +120,7 @@ begin
         InputList.add(PhaseDlg.DstList.items[i]);
       end;
   except
-    MessageDlg('Fehler beim Öffnen des Dialogs!',mtError,[mbok],0);
+    MessageDlg('Fehler beim Ã–ffnen des Dialogs!',mtError,[mbok],0);
   end;
 
   Bitmap := TBitmap.Create;
@@ -174,16 +176,17 @@ procedure TPhaseForm.FormResize(Sender: TObject);
 var
   ARect: TRect;
 begin
-  { Größen anpassen }
+  { GrÃ¶ÃŸen anpassen }
   if Width<300
 	then Width:=300;
   if Height<200
 	then Height:=200;
+
   Image.Picture.Graphic.Width :=Image.Width;
   Image.Picture.Graphic.Height :=Image.Height;
   with Image.Canvas do
   begin
-    { Zeichenfläche löschen }
+    { ZeichenflÃ¤che lÃ¶schen }
     CopyMode := cmWhiteness;
     ARect := Rect(0, 0, Image.Width, Image.Height);
     CopyRect(ARect, Image.Canvas, ARect);
@@ -192,6 +195,7 @@ begin
   { Graphik neu zeichnen, da sonst krissellig!! }
   Diagram.SetSize(Image.Width, Image.Height);
   Diagram.Zeichnen;
+
 end;
 
 procedure TPhaseForm.Autoskalierung1Click(Sender: TObject);

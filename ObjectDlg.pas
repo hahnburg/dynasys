@@ -16,13 +16,16 @@
  *)
 
 unit ObjectDlg;
+
+{$MODE Delphi}
+
 (*
-  Modelleditor für Zustände und Zwischenwerte
+  Modelleditor fÃ¼r ZustÃ¤nde und Zwischenwerte
 *)
 
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, Buttons,
+uses unix, LCLType, Classes, Graphics, Forms, Controls, Buttons,
   StdCtrls, ExtCtrls, Dialogs, SysUtils,
   SimObjekt, ErrorTxt, Parser, Util, Liste, TabEdit;
 
@@ -34,6 +37,9 @@ uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, Buttons,
     'Wenn()','Zufall()','Impuls()','Rampe()','Tabelle()','int()'{,'AlterWert()'});
 
 type
+
+  { TObjektDialog }
+
   TObjektDialog = class(TForm)
     OKBtn: TBitBtn;
     CancelBtn: TBitBtn;
@@ -77,7 +83,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure ListBox2Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure TabFktBtnClick(Sender: TObject);
+   // procedure OKBtnClick(Sender: TObject);
+     procedure TabFktBtnClick(Sender: TObject);
     procedure Memo1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
 
@@ -94,7 +101,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TObjektDialog.Init(Aobj:TSimuObjekt);
 begin
@@ -102,7 +109,7 @@ begin
   With Objekt do
     Case key of
       ZustandId : Caption:='Zustand';
-      VentilId  : Caption:='Zustandsänderung';
+      VentilId  : Caption:='ZustandsÃ¤nderung';
       WertId    : if EingangMax=0 then Caption:='Parameter'
                   else Caption:='Zwischenwert';
       WirkPfeilID : Caption:='Wirkung';
@@ -116,7 +123,7 @@ var i:integer;
     R:Real;
 begin
   if Objekt.key=ZustandId then begin
-    { eine Zustandsgöße kann mit einem Parameter initialisiert werden }
+    { eine ZustandsgÃ¶ÃŸe kann mit einem Parameter initialisiert werden }
     for i:=0 to ObjektListe.count-1 do
         If objektListe.items[i].key=WertId then
           if ObjektListe.items[i].EingangMax=0 then
@@ -128,7 +135,7 @@ begin
   end else if (Objekt.key>0) and (Objekt.key<ZustandId) then
     begin
      AnzahlEingaenge:=0;
-     { Erst Zustände }
+     { Erst ZustÃ¤nde }
      for i:=1 to Objekt.EingangMax Do Begin
          obj:=TWirkPfeilObjekt(Objekt.Eingaenge[i].zgr).von;
          if obj.key=ZustandId Then Begin
@@ -234,7 +241,7 @@ ZustandId :
             CanClose:=False;
          End Else Begin
           If Name<>ObjName Then Begin
-              {Objekt mit Wirkverbindung ungültig erklären }
+              {Objekt mit Wirkverbindung ungÃ¼ltig erklÃ¤ren }
                For i:=1 To AusgangMax do Begin
                 If Not ErsetzeNamen(TWirkPfeilObjekt(Objekt.Ausgaenge[i].zgr).nach,Objekt.Name,ObjName) Then
                    TWirkPfeilObjekt(Ausgaenge[i].zgr).nach.gueltig:=False;
@@ -252,7 +259,7 @@ WertId :
      begin
        with Objekt as TWertObjekt do begin
          Parse.LoescheBaum(Objekt.Baum);
-       { Prüfen, ob alle Eingänge verwendet wurden }
+       { PrÃ¼fen, ob alle EingÃ¤nge verwendet wurden }
        for i:=1 to Objekt.EingangMax Do Begin
          P:=TWirkPfeilObjekt(Objekt.Eingaenge[i].zgr).von;
          NStr:=P.Name;
@@ -262,7 +269,7 @@ WertId :
              CanClose:=False; Exit
            end;
         end;
-       { Eingabe-Syntax prüfen }
+       { Eingabe-Syntax prÃ¼fen }
        If TWertObjekt(Objekt).xtbf=NoTab Then Objekt.Baum:=parse.parse(EingabeZeile,NIL)
        Else Objekt.Baum:=parse.parse(Eingabe,TWertObjekt(Objekt).Tabelle);
        If parse.SyntaxError Then Begin
@@ -272,9 +279,9 @@ WertId :
          Memo1.SelStart:=0;
          Memo1.SelLength:= Parse.ScanErrPos;
        End Else Begin
-          {Werte übertragen }
+          {Werte Ã¼bertragen }
           If Objekt.Name<>ObjName Then Begin
-              {Objekt mit Wirkverbindung ungültig erklären }
+              {Objekt mit Wirkverbindung ungÃ¼ltig erklÃ¤ren }
               For i:=1 To Objekt.AusgangMax do Begin
                 If Not ErsetzeNamen(TWirkPfeilObjekt(Objekt.Ausgaenge[i].zgr).nach,Objekt.Name,ObjName) Then
                    TWirkPfeilObjekt(Objekt.Ausgaenge[i].zgr).nach.gueltig:=False;
@@ -285,7 +292,7 @@ WertId :
           Objekt.gueltig:=true;
           CanClose:=True;
        End;
-       {Baum auf alle Fälle löschen }
+       {Baum auf alle FÃ¤lle lÃ¶schen }
        Parse.LoescheBaum(Objekt.Baum);
 
        end; { with Objekt }
@@ -294,7 +301,7 @@ VentilId :
      begin
        with Objekt as TVentilObjekt do begin
          Parse.LoescheBaum(Objekt.Baum);
-       { Prüfen, ob alle Eingänge verwendet wurden }
+       { PrÃ¼fen, ob alle EingÃ¤nge verwendet wurden }
        for i:=1 to Objekt.EingangMax Do Begin
          P:=TWirkPfeilObjekt(Objekt.Eingaenge[i].zgr).von;
          NStr:=P.Name;
@@ -304,7 +311,7 @@ VentilId :
              CanClose:=False; Exit
            end;
         end;
-       { Eingabe-Syntax prüfen }
+       { Eingabe-Syntax prÃ¼fen }
        Objekt.Baum:=parse.parse(EingabeZeile,NIL);
        If parse.SyntaxError Then Begin
          MessageDlg(ErrorMsg(parse.ErrorArt),mtError,[mbok],0);
@@ -313,9 +320,9 @@ VentilId :
          Memo1.SelStart:=0;
          Memo1.SelLength:= Parse.ScanErrPos;
        End Else Begin
-          {Werte übertragen }
+          {Werte Ã¼bertragen }
           If Objekt.Name<>ObjName Then Begin
-              {Objekt mit Wirkverbindung ungültig erklären }
+              {Objekt mit Wirkverbindung ungÃ¼ltig erklÃ¤ren }
               For i:=1 To Objekt.AusgangMax do Begin
                 If Not ErsetzeNamen(TWirkPfeilObjekt(Objekt.Ausgaenge[i].zgr).nach,Objekt.Name,ObjName) Then
                    TWirkPfeilObjekt(Objekt.Ausgaenge[i].zgr).nach.gueltig:=False;
@@ -326,7 +333,7 @@ VentilId :
           Objekt.gueltig:=true;
           CanClose:=True;
        End;
-       {Baum auf alle Fälle löschen }
+       {Baum auf alle FÃ¤lle lÃ¶schen }
        Parse.LoescheBaum(Objekt.Baum);
 
        end; { with Objekt }
@@ -335,13 +342,19 @@ VentilId :
    Parse.LoescheLokBezListe;
 end;
 
+
+//procedure TObjektDialog.OKBtnClick(Sender: TObject);
+//begin
+//self.OKBtn.Click; //superflous (test only)
+//end;
+
 procedure TObjektDialog.TabFktBtnClick(Sender: TObject);
 begin
   // Tabelleneditor aufrufen
   TabEditForm:=TTabEditForm.Create(Application);
   TabEditForm.init(Objekt);
   TabEditForm.Show;
-  // Objektdialog schließen
+  // Objektdialog schlieÃŸen
   self.close();
 end;
 

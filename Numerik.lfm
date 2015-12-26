@@ -1,0 +1,139 @@
+object NumerikDlg: TNumerikDlg
+  Left = 273
+  Height = 230
+  Top = 213
+  Width = 403
+  ActiveControl = OKBtn
+  BorderStyle = bsDialog
+  Caption = 'Numerik Dialog'
+  ClientHeight = 230
+  ClientWidth = 403
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  OnActivate = FormActivate
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.4.4.0'
+  object Bevel1: TBevel
+    Left = 8
+    Height = 209
+    Top = 8
+    Width = 281
+    Shape = bsFrame
+  end
+  object Label1: TLabel
+    Left = 85
+    Height = 13
+    Top = 128
+    Width = 47
+    Alignment = taRightJustify
+    Caption = 'Startzeit:'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 90
+    Height = 13
+    Top = 160
+    Width = 43
+    Alignment = taRightJustify
+    Caption = 'Endzeit:'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 50
+    Height = 13
+    Top = 192
+    Width = 79
+    Alignment = taRightJustify
+    Caption = 'Zeitintervall dt:'
+    ParentColor = False
+  end
+  object OKBtn: TBitBtn
+    Left = 300
+    Height = 27
+    Top = 8
+    Width = 93
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    Margin = 2
+    ModalResult = 1
+    Spacing = -1
+    TabOrder = 0
+  end
+  object CancelBtn: TBitBtn
+    Left = 300
+    Height = 27
+    Top = 40
+    Width = 93
+    Caption = 'Abbruch'
+    Kind = bkCancel
+    Margin = 2
+    Spacing = -1
+    TabOrder = 1
+  end
+  object HelpBtn: TBitBtn
+    Left = 300
+    Height = 27
+    Top = 72
+    Width = 93
+    Caption = '&Hilfe'
+    Kind = bkHelp
+    Margin = 2
+    Spacing = -1
+    TabOrder = 2
+  end
+  object Rechenverfahren: TGroupBox
+    Left = 32
+    Height = 81
+    Top = 24
+    Width = 233
+    Caption = 'Rechenverfahren'
+    ClientHeight = 61
+    ClientWidth = 225
+    TabOrder = 3
+    object EulerBtn: TRadioButton
+      Left = 16
+      Height = 18
+      Top = 8
+      Width = 91
+      Caption = 'Euler-Cauchy'
+      TabOrder = 0
+    end
+    object RungeBtn: TRadioButton
+      Left = 16
+      Height = 18
+      Top = 32
+      Width = 86
+      Caption = 'Runge-Kutta'
+      Checked = True
+      TabOrder = 1
+      TabStop = True
+    end
+  end
+  object EditStartzeit: TEdit
+    Left = 144
+    Height = 22
+    Top = 120
+    Width = 121
+    TabOrder = 4
+  end
+  object EditEndzeit: TEdit
+    Left = 144
+    Height = 22
+    Top = 152
+    Width = 121
+    TabOrder = 5
+  end
+  object Editdt: TEdit
+    Left = 144
+    Height = 22
+    Top = 184
+    Width = 121
+    TabOrder = 6
+  end
+end

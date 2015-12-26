@@ -17,16 +17,19 @@
 
 unit Tabselect;
 
+{$MODE Delphi}
+
 (*
-  Auswahldialog für Tabelleneinträge
+  Auswahldialog fÃ¼r TabelleneintrÃ¤ge
   Version: 2.0
 *)
 
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, StdCtrls, Tabs,
+uses unix, Classes, Graphics, Forms, Controls, StdCtrls, LCLType,
   Buttons, ExtCtrls, Liste, SimObjekt, ComCtrls, Spin;
-
+const
+  LB_ERR = -1;
 type
   TTabelleDlg = class(TForm)
     ButtonPanel: TPanel;
@@ -68,7 +71,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TTabelleDlg.IncludeBtnClick(Sender: TObject);
 var
@@ -116,7 +119,8 @@ begin
   DstList.items.clear;
   for i:=0 to ObjektListe.Count-1 do begin
     if ObjektListe.items[i].key=ZustandId then
-         SrcList.items.add(ObjektListe.items[i].name)
+            DstList.items.add(ObjektListe.items[i].name);
+//         SrcList.items.add(ObjektListe.items[i].name)
   end;
   for i:=0 to ObjektListe.Count-1 do begin
     if (ObjektListe.items[i].key>0) and (ObjektListe.items[i].key<ZustandId)then
@@ -133,6 +137,7 @@ begin
     if List.Selected[I] then
     begin
       Items.AddObject(List.Items[I], List.Items.Objects[I]);
+//      Items.Add(List.Items[I]);
       List.Items.Delete(I);
     end;
 end;

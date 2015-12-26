@@ -17,6 +17,8 @@
 
 unit DynaMain;
 
+{$MODE Delphi}
+
 (*
   Dynasys-Hauptfenster (als MDI-Application)
   Autor: Walter Hupfeld
@@ -27,14 +29,16 @@ unit DynaMain;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, Menus,
-  DynaAbout, ModEditor,
-  Tabelle,  Gleichung, Liste, ErrorTxt, Numerik, Info,
-  Simulation, Gauges, Einstell, GraphWin, PhaseWin, Optionen, ShareDlg,
-  IniFiles, Register;
+  SysUtils, unix, Messages, Classes, Graphics, Controls,  LCLIntf,  LCLType,
+  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, Menus,   Liste, Info,   Numerik,
+  DynaAbout, FileUtil, IniFiles, ErrorTxt, ModEditor, Printers, HelpIntfs,
+  Tabelle, Gleichung, GraphWin, PhaseWin, Optionen, ShareDlg,
+ Simulation, Einstell, Register, ComCtrls;
 
 type
+
+  { TMainForm }
+
   TMainForm = class(TForm)
     MainMenu: TMainMenu;
     FileNewItem: TMenuItem;
@@ -47,9 +51,9 @@ type
     EditCutItem: TMenuItem;
     EditCopyItem: TMenuItem;
     EditPasteItem: TMenuItem;
-    WindowTileItem: TMenuItem;
-    WindowCascadeItem: TMenuItem;
-    WindowArrangeItem: TMenuItem;
+    N1: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
     HelpContentsItem: TMenuItem;
     HelpSearchItem: TMenuItem;
     HelpHowToUseItem: TMenuItem;
@@ -57,16 +61,16 @@ type
     StatusLine: TPanel;
     OpenDialog: TOpenDialog;
     SaveDialog: TSaveDialog;
-    PrintDialog: TPrintDialog;
-    PrintSetupDialog: TPrinterSetupDialog;
+    //PrintDialog: TCustomPrintDialog;
+    //PrintSetupDialog: TCustomPrinterSetupDialog;
     SpeedBar: TPanel;
     SpeedButton1: TSpeedButton;  { &Neu }
-    SpeedButton2: TSpeedButton;  { &Öffnen... }
+    SpeedButton2: TSpeedButton;  { &Ã–ffnen... }
     SpeedButton3: TSpeedButton;  { &Speichern }
     SpeedButton4: TSpeedButton;  { &Drucken... }
     SpeedButton5: TSpeedButton;  { &Ausschneiden }
     SpeedButton6: TSpeedButton;  { &Kopieren }
-    SpeedButton7: TSpeedButton;  { &Einfügen }
+    SpeedButton7: TSpeedButton;  { &EinfÃ¼gen }
     SpeedButton11: TSpeedButton;
     SpeedButton12: TSpeedButton;
     SpeedButton13: TSpeedButton;
@@ -89,7 +93,7 @@ type
     Einstellungen: TMenuItem;
     Numerik1: TMenuItem;
     N5: TMenuItem;
-    Gauge1: TGauge;
+    Gauge1: TProgressBar;
     N6: TMenuItem;
     Registrierung1: TMenuItem;
     N7: TMenuItem;
@@ -143,7 +147,7 @@ implementation
 
 uses RegDialog;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
 var DynasysIni : TIniFile;
@@ -157,7 +161,7 @@ begin
   DateiVorhanden:=false;
   ChangeFlag:=false;
   FileName:='';
-  Gauge1.visible:=false;
+  Gauge1.Visible:=false;
   self.left:=screen.width  div 20;
   self.top:=screen.width div 40;
   self.width:=screen.width*9 div 10;
@@ -273,9 +277,9 @@ begin
     (*MainForm.Caption:=FileName;*)
     DateiVorhanden:=true;
     // Falls Datei vorhanden ist - nachfragen
-    if FileExists(FileName) then
+    if FileExistsUTF8(FileName) { *Konvertiert von FileExists* } then
        if MessageDlg('Wollen Sie ' + ExtractFileName(FileName)
-         + ' wirklich überschreiben?',mtWarning,[mbYes,mbNo],0) <> mrYes
+         + ' wirklich Ã¼berschreiben?',mtWarning,[mbYes,mbNo],0) <> mrYes
     then exit;
     FileSave(Sender);
   end;
@@ -283,15 +287,15 @@ end;
 
 procedure TMainForm.FilePrint(Sender: TObject);
 begin
-  if PrintDialog.Execute then
+(*  if PrintDialog.Execute then
   begin
-    { Programmcode zum Drucken der aktuellen Datei hier einfügen }
-  end;
+    { Programmcode zum Drucken der aktuellen Datei hier einfÃ¼gen }
+  end;  *)
 end;
 
 procedure TMainForm.FilePrintSetup(Sender: TObject);
 begin
-  PrintSetupDialog.Execute;
+  //todo PrintSetupDialog.Execute;
 end;
 
 procedure TMainForm.FileExit(Sender: TObject);
@@ -307,23 +311,23 @@ end;
 
 procedure TMainForm.EditUndo(Sender: TObject);
 begin
-  { Programmcode zur Ausführung von Bearbeiten Rückgänging hier einfügen }
+  { Programmcode zur AusfÃ¼hrung von Bearbeiten RÃ¼ckgÃ¤nging hier einfÃ¼gen }
 end;
 
 procedure TMainForm.EditCut(Sender: TObject);
 begin
-  // Vorläufig
+  // VorlÃ¤ufig
   ModellEditor.LoeschenClick(Sender);
 end;
 
 procedure TMainForm.EditCopy(Sender: TObject);
 begin
-  { Programmcode zur Ausführung von Bearbeiten Kopieren hier einfügen }
+  { Programmcode zur AusfÃ¼hrung von Bearbeiten Kopieren hier einfÃ¼gen }
 end;
 
 procedure TMainForm.EditPaste(Sender: TObject);
 begin
-  { Programmcode zur Ausführung von Bearbeiten Einfügen hier einfügen }
+  { Programmcode zur AusfÃ¼hrung von Bearbeiten EinfÃ¼gen hier einfÃ¼gen }
 end;
 
 procedure TMainForm.WindowTile(Sender: TObject);
@@ -338,24 +342,24 @@ end;
 
 procedure TMainForm.WindowArrange(Sender: TObject);
 begin
-  ArrangeIcons;
+ // ArrangeIcons;
 end;
 
 procedure TMainForm.HelpContents(Sender: TObject);
 begin
-  Application.HelpCommand(HELP_CONTENTS, 0);
+ // Application.HelpCommand(HELP_CONTENTS, 0);
 end;
 
 procedure TMainForm.HelpSearch(Sender: TObject);
 const
   EmptyString: PChar = '';
 begin
-  Application.HelpCommand(HELP_PARTIALKEY, Longint(EmptyString));
+ // Application.HelpCommand(HELP_PARTIALKEY, Longint(EmptyString));
 end;
 
 procedure TMainForm.HelpHowToUse(Sender: TObject);
 begin
-  Application.HelpCommand(HELP_HELPONHELP, 0);
+//  Application.HelpCommand(HELP_HELPONHELP, 0);
 end;
 
 procedure TMainForm.HelpAbout(Sender: TObject);
@@ -394,7 +398,7 @@ begin
 end;
 
 procedure TMainForm.PhasendiagrammClick(Sender: TObject);
-  //MessageDlg('In dieser Version noch nicht verfügbar!', mtInformation, [mbOk], 0);
+  //MessageDlg('In dieser Version noch nicht verfÃ¼gbar!', mtInformation, [mbOk], 0);
 var GraphForm:TGraphForm;
 begin
   if ObjektListe.ModellGueltig<>0 then begin
@@ -424,12 +428,12 @@ procedure TMainForm.Starten1Click(Sender: TObject);
 begin
   Gauge1.left:=self.width-Gauge1.width-30;
   Screen.Cursor:=crHourGlass;
-  Gauge1.visible:=true;
-  Gauge1.progress:=0;
+  Gauge1.Visible:=true;
+  Gauge1.Position:=0;
   Simulator.StarteBerechnung;
-  Gauge1.progress:=0;
+(*  Gauge1.SetPosition:=0;   *)
   Screen.Cursor:=crDefault;
-  Gauge1.visible:=false;
+  Gauge1.Visible:=false;
 end;
 
 procedure TMainForm.EinstellungenClick(Sender: TObject);
@@ -451,7 +455,7 @@ procedure TMainForm.Timer1Timer(Sender: TObject);
 begin
    Timer1.Enabled:=false;
    Timer1.Free;
-   if not registriert then ShareWareDlg.ShowModal;
+   //if not registriert then ShareWareDlg.ShowModal;
 end;
 
 end.

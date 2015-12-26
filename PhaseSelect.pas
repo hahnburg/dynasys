@@ -17,13 +17,16 @@
 
 unit PhaseSelect;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls,
+  LCLIntf, LCLType, LCLProc, ColorBox, LMessages, StdCtrls, Messages, SysUtils, Variants, Classes, Graphics, Controls,
+  Forms, Dialogs, ExtCtrls, Buttons, ComCtrls,
     Liste,SimObjekt,  ErrorTxt;
-
+const
+  LB_ERR = -1;
 type
   TPhasenAuswahl = class(TForm)
     ButtonPanel: TPanel;
@@ -83,7 +86,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TPhasenAuswahl.FormCreate(Sender: TObject);
 begin

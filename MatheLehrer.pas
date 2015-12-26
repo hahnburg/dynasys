@@ -17,6 +17,8 @@
 
 UNIT MatheLehrer;
 
+{$MODE Delphi}
+
 interface
 
 uses Classes,Util;
@@ -207,11 +209,11 @@ Var zgr:Integer;
     m:RR;
     p:TPunkt;
 Begin
-  { Erst mal die Tabelle ordnen, man weiß ja nie }
-  { zumindestens überprüfen --  fehlt hier noch -  ergänzen !!!!!!!! }
+  { Erst mal die Tabelle ordnen, man weiÃŸ ja nie }
+  { zumindestens Ã¼berprÃ¼fen --  fehlt hier noch -  ergÃ¤nzen !!!!!!!! }
   zgr:=0;
   While (x>=TPunkt(Tab.items[zgr]).x) and (zgr<Tab.Count-1) do inc(Zgr);
-  { Außerhalb der Grenzen wird der Randwert genommen:}
+  { AuÃŸerhalb der Grenzen wird der Randwert genommen:}
   If Zgr=0 Then TabFkt:=TPunkt(Tab.items[0]).y
   Else if x>TPunkt(Tab.items[Tab.Count-1]).x Then TabFkt:=TPunkt(Tab.items[Tab.Count-1]).y
   { Jetzt linear interpolieren! }

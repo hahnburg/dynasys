@@ -17,9 +17,11 @@
 
 unit DynaAbout;
 
+{$MODE Delphi}
+
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, StdCtrls,
+uses unix, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ExtCtrls;
 
 type
@@ -48,7 +50,7 @@ implementation
 
 uses Dynamain;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TAboutBox.FormCreate(Sender: TObject);
 begin

@@ -17,13 +17,15 @@
 
 unit Simulation;
 
+{$MODE Delphi}
+
 (* Runge-Kutta und Euler-Cauchy-Verfahren
    Version: 2.0
 *)
 
 interface
 
-Uses Dialogs,WinTypes, WinProcs,Forms, SysUtils,
+Uses Dialogs,unix,Forms, SysUtils,
      ErrorTxt, Liste, SimObjekt, Parser, Numerik, Tabelle, GraphWin, PhaseWin;
 
 Type TSimulator = Class
@@ -80,7 +82,7 @@ Begin
     MessageDlg(ErrorTxt23,mtInformation,[mbok],0); Exit;
   end;
 
-  // Modell ist g¸ltig
+  // Modell ist g√ºltig
 
   If Not ObjektListe.SortiereListe then Begin
      MessageDlg(ErrorTxt16,mtError,[mbok],0); Exit
@@ -90,7 +92,7 @@ Begin
 
   s1:=0;s2:=0;s1max:=0;s1min:=0;s2max:=0;s2min:=0;
 
-  { Erst die lokale Bezeichnerliste lˆschen }
+  { Erst die lokale Bezeichnerliste l√∂schen }
   parse.LoescheLokBezListe;
 
   { Die lokalen Bezeichner hochladen }
@@ -104,7 +106,7 @@ Begin
             V_Wert:=0.0;
          End;
 
-    { Die Parserb‰ume erzeugen }
+    { Die Parserb√§ume erzeugen }
     For i:=0 to Count-1 do
       If items[i].key>0 Then
          With items[i] Do Begin
@@ -138,8 +140,8 @@ Begin
       With items[i] do
         Begin Minimum:=0; Maximum:=0 End;
 
-    { Formeln f¸r Zust‰nde ermitteln }
-    { Startwerte der Zust‰nde setzen }
+    { Formeln f√ºr Zust√§nde ermitteln }
+    { Startwerte der Zust√§nde setzen }
     For i:=0 to Count-1 do
       If items[i].key=ZustandId Then
         With TZustandObjekt(items[i]) Do Begin
@@ -187,12 +189,12 @@ Begin
 {========================================================================== }
   {  Berechne_Werte;   }
 For j:=1 to k+1 do Begin
-    MainForm.Gauge1.progress:=Round(j/k*100);
+   MainForm.Gauge1.Position := Round(j/k*100);
    (* Application.ProcessMessages;*)
 
     { Jetzt die Zwischenwerte und die Ventile berechnen }
     If not Berechne_Werte then goto AError;
-    { Jetzt die Zust‰nde berechnen }
+    { Jetzt die Zust√§nde berechnen }
 
     If NumerikDlg.Euler Then  Begin  { Euler-Cauchy-Verfahren }
       For i:=0 to Count-1 do
@@ -203,9 +205,9 @@ For j:=1 to k+1 do Begin
            end;
     { ==================================================================================== }
     End Else Begin                 { Runge-Kutta-Verfahren }
-       { Die Zwischenwerte m¸ssen umkopiert werden, da sonst in der Ausgabe nur die
+       { Die Zwischenwerte m√ºssen umkopiert werden, da sonst in der Ausgabe nur die
          Werte nach dem 4. Runge-Schritt erscheinen.
-         Anschlieﬂend m¸ssen die Werte nach dem 1 Runge-Schritt wieder hergestellt
+         Anschlie√üend m√ºssen die Werte nach dem 1 Runge-Schritt wieder hergestellt
          werden.}
        For i:=0 to Count-1 do
         If (items[i].Key=WertId)or (items[i].Key=VentilId) Then
@@ -262,7 +264,7 @@ For j:=1 to k+1 do Begin
                 g_Wert:=V_Wert;
              End;
            End;
-       { Jezt die Zwischengrˆﬂen wieder herstellen }
+       { Jezt die Zwischengr√∂√üen wieder herstellen }
        For i:=0 to Count-1 do                              { 3. k3 - berechnen }
          If (items[i].Key=WertId) or (items[i].Key=VentilId) Then
            With items[i] Do g_wert:=v_Wert;
@@ -328,7 +330,7 @@ For i:=0 to Application.componentCount-1 do
    If State^.InitZeigeDatum Then xyWindow^.SetDate(AktDate)  Else  xyWindow^.SetDate(Nil);
  End;     *)
 
- { Funktion AlterWert dabei ?  Dann wieder lˆschen}
+ { Funktion AlterWert dabei ?  Dann wieder l√∂schen}
  For i:=0 to ObjektListe.Count-1 do
       If ObjektListe.items[i].delay Then Begin
         For j:=0 to ObjektListe.items[i].DelayValue.Count-1 Do

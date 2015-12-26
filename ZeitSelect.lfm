@@ -1,0 +1,374 @@
+object ZeitkurveDlg: TZeitkurveDlg
+  Left = 171
+  Height = 408
+  Top = 210
+  Width = 621
+  ActiveControl = OKBtn
+  BorderStyle = bsDialog
+  Caption = 'Zeitdiagramm'
+  ClientHeight = 408
+  ClientWidth = 621
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  OnCreate = FormCreate
+  OnPaint = FormPaint
+  LCLVersion = '1.4.4.0'
+  object ButtonPanel: TPanel
+    Left = 525
+    Height = 408
+    Top = 0
+    Width = 96
+    Align = alRight
+    BevelOuter = bvNone
+    ClientHeight = 408
+    ClientWidth = 96
+    TabOrder = 0
+    object OKBtn: TBitBtn
+      Left = 1
+      Height = 27
+      Top = 12
+      Width = 88
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      Margin = 2
+      ModalResult = 1
+      Spacing = -1
+      TabOrder = 0
+    end
+    object CancelBtn: TBitBtn
+      Left = 1
+      Height = 27
+      Top = 46
+      Width = 88
+      Caption = 'Abbruch'
+      Kind = bkCancel
+      Margin = 2
+      Spacing = -1
+      TabOrder = 1
+    end
+    object HelpBtn: TBitBtn
+      Left = 1
+      Height = 27
+      Top = 82
+      Width = 88
+      Caption = '&Hilfe'
+      Kind = bkHelp
+      Margin = 2
+      Spacing = -1
+      TabOrder = 2
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 8
+    Height = 289
+    Top = 8
+    Width = 376
+    ActivePage = TabSheet1
+    TabIndex = 0
+    TabOrder = 1
+    object TabSheet1: TTabSheet
+      Caption = 'Variablen'
+      ClientHeight = 250
+      ClientWidth = 370
+      object GroupBox1: TGroupBox
+        Left = 8
+        Height = 228
+        Top = 4
+        Width = 353
+        Caption = 'Variablenauswahl'
+        ClientHeight = 208
+        ClientWidth = 345
+        TabOrder = 0
+        object SrcLabel: TLabel
+          Left = 16
+          Height = 16
+          Top = 24
+          Width = 145
+          AutoSize = False
+          Caption = 'Quell-Liste:'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object DstLabel: TLabel
+          Left = 200
+          Height = 16
+          Top = 24
+          Width = 145
+          AutoSize = False
+          Caption = 'Zielliste:'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object IncludeBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 56
+          Width = 24
+          Caption = '>'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = IncludeBtnClick
+          ParentFont = False
+        end
+        object IncAllBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 88
+          Width = 24
+          Caption = '>>'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = IncAllBtnClick
+          ParentFont = False
+        end
+        object ExcludeBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 120
+          Width = 24
+          Caption = '<'
+          Enabled = False
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = ExcludeBtnClick
+          ParentFont = False
+        end
+        object ExAllBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 152
+          Width = 24
+          Caption = '<<'
+          Enabled = False
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = ExAllBtnClick
+          ParentFont = False
+        end
+        object SrcList: TListBox
+          Left = 16
+          Height = 153
+          Top = 48
+          Width = 144
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ItemHeight = 0
+          MultiSelect = True
+          ParentFont = False
+          Sorted = True
+          TabOrder = 0
+        end
+        object DstList: TListBox
+          Left = 200
+          Height = 153
+          Top = 48
+          Width = 144
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ItemHeight = 0
+          MultiSelect = True
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Schaubild'
+      ClientHeight = 250
+      ClientWidth = 370
+      ImageIndex = 1
+      object GroupBox2: TGroupBox
+        Left = 8
+        Height = 217
+        Top = 8
+        Width = 353
+        Caption = 'Farbwahl'
+        ClientHeight = 197
+        ClientWidth = 345
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 16
+          Height = 13
+          Top = 49
+          Width = 62
+          Caption = 'Schaubild 1'
+          ParentColor = False
+        end
+        object Label2: TLabel
+          Left = 16
+          Height = 13
+          Top = 81
+          Width = 62
+          Caption = 'Schaubild 2'
+          ParentColor = False
+        end
+        object Label3: TLabel
+          Left = 16
+          Height = 13
+          Top = 113
+          Width = 62
+          Caption = 'Schaubild 3'
+          ParentColor = False
+        end
+        object Label4: TLabel
+          Left = 16
+          Height = 13
+          Top = 145
+          Width = 62
+          Caption = 'Schaubild 4'
+          ParentColor = False
+        end
+        object ColorBox1: TColorBox
+          Left = 104
+          Height = 16
+          Top = 44
+          Width = 105
+          ItemHeight = 16
+          TabOrder = 0
+        end
+        object ColorBox2: TColorBox
+          Left = 104
+          Height = 16
+          Top = 76
+          Width = 105
+          DefaultColorColor = clRed
+          Selected = clRed
+          ItemHeight = 16
+          TabOrder = 1
+        end
+        object ColorBox3: TColorBox
+          Left = 104
+          Height = 16
+          Top = 108
+          Width = 105
+          DefaultColorColor = clNavy
+          Selected = clNavy
+          ItemHeight = 16
+          TabOrder = 2
+        end
+        object ColorBox4: TColorBox
+          Left = 104
+          Height = 16
+          Top = 140
+          Width = 105
+          DefaultColorColor = clGreen
+          Selected = clGreen
+          Color = clWhite
+          ItemHeight = 16
+          TabOrder = 3
+        end
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'Achsenkreuz'
+      ClientHeight = 250
+      ClientWidth = 370
+      ImageIndex = 2
+      object GroupBox3: TGroupBox
+        Left = 8
+        Height = 217
+        Top = 4
+        Width = 353
+        Caption = 'Skalierung'
+        ClientHeight = 197
+        ClientWidth = 345
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 0
+        object RadioGroup1: TRadioGroup
+          Left = 16
+          Height = 73
+          Top = 24
+          Width = 105
+          AutoFill = True
+          Caption = 'Skalierung'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          TabOrder = 0
+        end
+        object RadioButton1: TRadioButton
+          Left = 24
+          Height = 18
+          Top = 48
+          Width = 66
+          Caption = 'ungleich'
+          TabOrder = 1
+        end
+        object RadioButton2: TRadioButton
+          Left = 24
+          Height = 18
+          Top = 72
+          Width = 52
+          Caption = 'gleich'
+          Enabled = False
+          TabOrder = 2
+        end
+        object RadioGroup2: TRadioGroup
+          Left = 16
+          Height = 81
+          Top = 112
+          Width = 105
+          AutoFill = True
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          TabOrder = 3
+        end
+        object RadioButton4: TRadioButton
+          Left = 24
+          Height = 18
+          Top = 160
+          Width = 62
+          Caption = 'manuell'
+          Enabled = False
+          TabOrder = 5
+        end
+        object RadioButton3: TRadioButton
+          Left = 24
+          Height = 18
+          Top = 136
+          Width = 85
+          Caption = 'automatisch'
+          Checked = True
+          TabOrder = 4
+          TabStop = True
+        end
+      end
+    end
+  end
+end

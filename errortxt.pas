@@ -17,8 +17,10 @@
 
 unit Errortxt;
 
+{$MODE Delphi}
+
 (*
-  Zentrale Datei für alle Systemmeldungen
+  Zentrale Datei fÃ¼r alle Systemmeldungen
   Autor: Walter Hupfeld
   Version: 2.0
   zuletzt bearbeitet: 3.9.2003
@@ -30,39 +32,39 @@ Uses Parser;
 
 const
   cr = #10#13;
-  ErrorTxt1 ='Fehlerhafter Name! Namen dürfen nur Buchstaben und Ziffern'+
+  ErrorTxt1 ='Fehlerhafter Name! Namen dÃ¼rfen nur Buchstaben und Ziffern'+
              ' enthalten, keine Sonderzeichen und Leerzeichen.';
   ErrorTxt2 ='Der Objektname ist bereits vergeben!';
-  ErrorTxt3 ='Es müssen alle Eingänge verwendet werden!';
+  ErrorTxt3 ='Es mÃ¼ssen alle EingÃ¤nge verwendet werden!';
   ErrorTxt4 ='Fehlerhafte Eingabe! Dezimalen werden mit einem Komma getrennt.';
 
   { Unit Simulation }
   ErrorTxt10 = 'Fataler Fehler! ';
-  ErrorTxt11 = 'Überlauf: Bei der Berechnung sind zu große Werte entstanden!'+#10#13;
+  ErrorTxt11 = 'Ãœberlauf: Bei der Berechnung sind zu groÃŸe Werte entstanden!'+#10#13;
   ErrorTxt12 = 'Division durch Null!'+#10#13;
-  ErrorTxt13 = 'Zahl liegt außerhalb des erlaubten Bereichs!'+#10#13;
-  ErrorTxt14 = 'Die Zeitverzögerung in der Funktion AlterWert'+#10#13+
-               'muss größer als dt sein!'+#10#13;
+  ErrorTxt13 = 'Zahl liegt auÃŸerhalb des erlaubten Bereichs!'+#10#13;
+  ErrorTxt14 = 'Die ZeitverzÃ¶gerung in der Funktion AlterWert'+#10#13+
+               'muss grÃ¶ÃŸer als dt sein!'+#10#13;
   ErrorTxt15 = 'Simulation kann nicht gestartet werden!'+#12+#13+
-               'Das Modell ist nicht vollständig!';
+               'Das Modell ist nicht vollstÃ¤ndig!';
   ErrorTxt16 = 'Simulation kann nicht gestartet werden!'+#12+#13+
-                  'Es sind Zirkelbezüge vohanden!';
-  ErrorTxt17 = 'Fataler Fehler beim Übersetzen der Eingabe im Objekt ';
-  ErrorTxt18 = ' Überprüfen Sie Ihr Modell!';
-  ErrorTxt19 = 'Überlauf: Bei der Berechnung sind zu große Werte entstanden!'+#10#13
+                  'Es sind ZirkelbezÃ¼ge vohanden!';
+  ErrorTxt17 = 'Fataler Fehler beim Ãœbersetzen der Eingabe im Objekt ';
+  ErrorTxt18 = ' ÃœberprÃ¼fen Sie Ihr Modell!';
+  ErrorTxt19 = 'Ãœberlauf: Bei der Berechnung sind zu groÃŸe Werte entstanden!'+#10#13
                      +'Rechnung fortsetzen?';
-  ErrorTxt20 = 'Überprüfen Sie Ihr Modell.';
-  ErrorTxt21 = 'Datei kann nicht geöffnet werden!';
+  ErrorTxt20 = 'ÃœberprÃ¼fen Sie Ihr Modell.';
+  ErrorTxt21 = 'Datei kann nicht geÃ¶ffnet werden!';
   ErrorTxt22 = 'Unbekanntes Datenformat!';
   ErrorTxt23 = 'Kein Modell vorhanden?';
-  ErrorTxt30 = 'Nur 4 Ausgabegraphen möglich!';
-  ErrorTxt31 = 'Für Phasendiagramme müssen genau 2 Parameter ausgewählt werden!';
+  ErrorTxt30 = 'Nur 4 Ausgabegraphen mÃ¶glich!';
+  ErrorTxt31 = 'FÃ¼r Phasendiagramme mÃ¼ssen genau 2 Parameter ausgewÃ¤hlt werden!';
   ErrorTxt40 = 'Fehlerhafte Zahleneingabe im Textfeld.'+cr+'Dezimalzahlen werden mit Komma eingegeben!';
 
   InfoTxt1='Vorhandenes Modell ist noch nicht gesichert?'+#10#13+'Speichern?';
-  InfoTxt2='Aktuelles Modell überschreiben?';
+  InfoTxt2='Aktuelles Modell Ã¼berschreiben?';
   InfoTxt3='Datei speichern ?';
-  InfoTxt4='Kein Modell vorhanden oder Modell unvollständig.';
+  InfoTxt4='Kein Modell vorhanden oder Modell unvollstÃ¤ndig.';
 
 
  function ErrorMsg(Error:Errortype):String;
@@ -84,12 +86,12 @@ implementation
           errXtbf      :  result:='Fehlerhafte Tabellenfunktion!'+ #10#13+#10#13+
                                'Die Tabellenfunktion hat die Form'+ #10#13 +
                                'Tabelle(Bezeichner)((x1;y1)(x2;y2) ... (xn;yn)) ';
-          errXtbf2     :  result:='In einer Tabellenfunktion müssen die x-Werte'+ #10#13 +
+          errXtbf2     :  result:='In einer Tabellenfunktion mÃ¼ssen die x-Werte'+ #10#13 +
                                'aufsteigend sortiert sein!';
           errDelay     :  result:='Fehlerhafte Funktion AlterWert!'+ #10#13+#10#13+
                                'Die Funktion AlterWert hat die Form'+ #10#13 +
-                               'AlterWert(Bezeichner;Verzögerung;Init) ';
-          errKommentar :  result:='Abschließende Kommentarklammer fehlt!';
+                               'AlterWert(Bezeichner;VerzÃ¶gerung;Init) ';
+          errKommentar :  result:='AbschlieÃŸende Kommentarklammer fehlt!';
           errRelation  :  result:='Fehler in Wenn-Funktion: Wenn(Bed1<Bed2;Dann;Sonst) ';
       else result :='Unbekannter Fehler'
    end;  {case }

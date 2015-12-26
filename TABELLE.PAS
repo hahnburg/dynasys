@@ -1,5 +1,7 @@
 unit Tabelle;
 
+{$MODE Delphi}
+
 (* Dynasys, http://code.google.com/p/dynasys/
  * Copyright (C) 2009  Dynasys
  * 
@@ -25,9 +27,8 @@ unit Tabelle;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, StdCtrls, Dialogs, Grids,
-  TabSelect, Liste, SimObjekt, Menus;
+  SysUtils, unix, Messages, Classes, Graphics, Controls, LCLType,
+  Forms, StdCtrls, Dialogs, Grids, Tabselect, Liste, SimObjekt, Menus;
 
 type
   TTabForm = class(TForm)
@@ -62,7 +63,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TTabForm.FormShow(Sender: TObject);
 var i:integer;
@@ -73,7 +74,7 @@ begin
    Tabelle.ColCount:=InputList.Count+1;
    Tabelle.RowCount:=110;                  // ?????
 
-   // Überschriften setzen
+   // Ãœberschriften setzen
    For i:=0 to InputList.Count-1 do
      Tabelle.Cells[i+1,0]:=InputList.strings[i];
 
@@ -96,7 +97,7 @@ begin
         self.close;
       end;
   except
-    MessageDlg('Fehler beim Öffnen des Dialogs!',mtError,[mbok],0);
+    MessageDlg('Fehler beim Ã–ffnen des Dialogs!',mtError,[mbok],0);
   end
 end;
 
@@ -120,7 +121,8 @@ begin
   Stellen:=TabelleDlg.SpinEdit1.Value;
   Tabelle.cells[0,AktZeile]:=FloatToStrF(Zeit,ffNumber,15,2);
   AktSpalte:=1;
-  for j:=1 to Tabelle.ColCount do
+//todo  for j:=1 to Tabelle.ColCount do
+    for j:=0 to Tabelle.ColCount-1 do
     begin
       Eintrag:=Tabelle.Cells[j,0];
       for i:=0 to ObjektListe.count-1 do

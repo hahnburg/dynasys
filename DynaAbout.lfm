@@ -1,0 +1,157 @@
+object AboutBox: TAboutBox
+  Left = 304
+  Top = 174
+  ActiveControl = OKButton
+  BorderStyle = bsDialog
+  Caption = 'Infos'
+  ClientHeight = 243
+  ClientWidth = 413
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'Courier New'
+  Font.Style = []
+  Position = poScreenCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  object Panel1: TPanel
+    Left = 10
+    Top = 9
+    Width = 393
+    Height = 192
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    TabOrder = 0
+    object ProgramIcon: TImage
+      Left = 24
+      Top = 17
+      Width = 37
+      Height = 39
+      Picture.Data = {
+        055449636F6E0000010001002020100000000000E80200001600000028000000
+        2000000040000000010004000000000000020000000000000000000010000000
+        00000000000000000000BF0000BF000000BFBF00BF000000BF00BF00BFBF0000
+        C0C0C000808080000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000
+        FFFFFF00999999999999999999999999999999999FFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99FFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99FFFFFFFF000FFFFFFFFFFFF
+        FFFFFFF99FFFFFFF0AAA0FFFFFFFFFFFFFFFFFF99FFFFFF0AAAAA0FFFFFFFFFF
+        FFFFFFF99FFFFFF0AAAAA0FFFFFFFFFFFFFFFFF99FFFFFF0AAAAA00F0FFFFFFF
+        FFFFFFF99FFFFFFF0AAA0FF00FFFFFFFFFFFFFF99FFFFFFFF000FF000FFFFFFF
+        FFFFFFF99FFFFFFFF000FFFFF000FFFFFFFFFFF99FFFFFFF0F0F0FFF09990FFF
+        FFFFFFF99FFFFFFFFF0FFFFF09990FFFFFFFFFF99FFFFFFFFF0FFFFF09990FFF
+        FFFFFFF99FFFFFFFFF0FFFFF09990FFFFFFFFFF99FFFFF00000000FFF000FF00
+        00000FF99FFFFF0BBBBBB0FFFF0FFF0BBBBB0FF99FFFFF0BBBBBB0000000000B
+        BBBB0FF99FFFFF0BBBBBB0000000000BBBBB0FF99FFFFF0BBBBBB0FFFF0FFF0B
+        BBBB0FF99FFFFF00000000FFF000FF0000000FF99FFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99FFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99FFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99FFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF99FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9999999999999999999999999
+        9999999900000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000
+      }
+      Stretch = True
+    end
+    object Name: TLabel
+      Left = 73
+      Top = 14
+      Width = 112
+      Height = 32
+      Caption = 'Dynasys'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -27
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Version: TLabel
+      Left = 73
+      Top = 50
+      Width = 91
+      Height = 13
+      Caption = 'Version %ERR%'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Copyright: TLabel
+      Left = 13
+      Top = 173
+      Width = 257
+      Height = 13
+      Caption = 'Walter Hupfeld, Bankerheide 2, 59065 Hamm'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Comments: TLabel
+      Left = 14
+      Top = 72
+      Width = 360
+      Height = 16
+      Caption = 'Modellbildung und Simulation dynamischer Systeme'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+      WordWrap = True
+    end
+    object Label1: TLabel
+      Left = 16
+      Top = 152
+      Width = 197
+      Height = 16
+      Caption = 'http://www.hupfeld-software.de'
+    end
+    object Label2: TLabel
+      Left = 16
+      Top = 104
+      Width = 222
+      Height = 16
+      Caption = 'http://code.google.com/p/dynasys/'
+    end
+    object Label3: TLabel
+      Left = 5
+      Top = 131
+      Width = 146
+      Height = 16
+      Caption = 'Ursprünglicher Autor:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+  object OKButton: TBitBtn
+    Left = 168
+    Top = 210
+    Width = 77
+    Height = 27
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+    Kind = bkOK
+    Margin = 2
+    Spacing = -1
+  end
+end

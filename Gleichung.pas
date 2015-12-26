@@ -17,10 +17,12 @@
 
 unit Gleichung;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
+  SysUtils, unix, Messages, Classes, Graphics, Controls, LCLType,
   Forms, Dialogs, StdCtrls,
   Liste, SimObjekt, ObjectDlg, TabEdit;
 
@@ -43,7 +45,7 @@ implementation
 
 uses DynaMain;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TGleichungen.FillListbox;
 Var i,j:integer;
@@ -70,7 +72,7 @@ begin
   { Fluesse }
   Zeile:='  ';
   Listbox1.items.add(Zeile);
-  Zeile:=' Zustands‰nderungen ';
+  Zeile:=' Zustands√§nderungen ';
   Listbox1.items.add(Zeile);
   For i:=0 To ObjektListe.Count-1 do
     If ObjektListe.items[i].key=VentilId then  begin

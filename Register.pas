@@ -17,8 +17,10 @@
 
 unit Register;
 
+{$MODE Delphi}
+
 (*
-  Berechnung der Registriernummer für Shareware-Version
+  Berechnung der Registriernummer fÃ¼r Shareware-Version
   Version: 2.0
 *)
 
@@ -38,7 +40,7 @@ implementation
       If (pu[k] <= #32) or (pu[k] >= #127) then
         Delete(pu, k, 1)                { Alle Leer- und Sonderzeichen raus... }
       else
-        pu[k] := UpCase(pu[k]);         { ...alles in Großbuchstaben umwandeln!}
+        pu[k] := UpCase(pu[k]);         { ...alles in GroÃŸbuchstaben umwandeln!}
 
     pz [0] := 19;                       { Startwerte setzen;                   }
     pz [1] := 13;                       {   hier kann der Algorithmus je nach  }
@@ -48,7 +50,7 @@ implementation
 
     For k := 1 to Length(pu) do begin
       pz [i] := (pz [i] + Byte(pu[k])) Mod 100;
-        { einfache Prüf"summe" }
+        { einfache PrÃ¼f"summe" }
       i      :=  pz [i] Mod 4;
       end;
     pu := '';

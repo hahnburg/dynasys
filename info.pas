@@ -16,6 +16,9 @@
  *)
 
 unit Info;
+
+{$MODE Delphi}
+
 (*
   Modellinformation mit einem RTF-Editor
   Version: 2.0
@@ -25,7 +28,7 @@ unit Info;
 
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, Buttons,
+uses unix, Classes, Graphics, Forms, Controls, Buttons, RichView,
   StdCtrls, ExtCtrls, ComCtrls;
 
 type
@@ -34,7 +37,7 @@ type
     CancelBtn: TBitBtn;
     HelpBtn: TBitBtn;
     Bevel1: TBevel;
-    RichEdit1: TRichEdit;
+    RichEdit1: TRichView;
   private
     { Private declarations }
   public
@@ -49,7 +52,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
      procedure TModellInfo.StoreData(W:TWriter);
      var i:integer;
      begin

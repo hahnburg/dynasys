@@ -1,0 +1,176 @@
+object SharewareDlg: TSharewareDlg
+  Left = 296
+  Top = 137
+  ActiveControl = OKBtn
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Dynasys ist Shareware!'
+  ClientHeight = 383
+  ClientWidth = 527
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  FormStyle = fsStayOnTop
+  Position = poScreenCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  object Bevel1: TBevel
+    Left = 8
+    Top = 8
+    Width = 505
+    Height = 337
+    Shape = bsFrame
+  end
+  object Bevel2: TBevel
+    Left = 107
+    Top = 24
+    Width = 313
+    Height = 33
+  end
+  object Label1: TLabel
+    Left = 212
+    Top = 32
+    Width = 103
+    Height = 19
+    Alignment = taCenter
+    Caption = 'DYNASYS 2.0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 130
+    Top = 72
+    Width = 266
+    Height = 13
+    Caption = 'NICHT LIZENZIERTE SHAREWARE-VERSION'
+  end
+  object Label3: TLabel
+    Left = 24
+    Top = 104
+    Width = 447
+    Height = 13
+    Caption = 'Diese Programmversion darf drei Wochen zum Testen benutzt werden. Danach'
+  end
+  object Label4: TLabel
+    Left = 24
+    Top = 120
+    Width = 379
+    Height = 13
+    Caption = 'ist eine Verwendung nur erlaubt, wenn Sie sich registrieren lassen.'
+  end
+  object Label5: TLabel
+    Left = 24
+    Top = 144
+    Width = 460
+    Height = 13
+    Caption = 'Die Shareware-Version darf nicht in Schulen oder anderen Bildungseinrichtungen'
+  end
+  object Label6: TLabel
+    Left = 24
+    Top = 160
+    Width = 108
+    Height = 13
+    Caption = 'eingesetzt werden.'
+  end
+  object Label7: TLabel
+    Left = 24
+    Top = 184
+    Width = 291
+    Height = 13
+    Caption = 'Bei der registrierten Version entfällt dieser Hinweis!'
+  end
+  object Label8: TLabel
+    Left = 24
+    Top = 208
+    Width = 71
+    Height = 13
+    Caption = 'Einzellizenz:'
+  end
+  object Label9: TLabel
+    Left = 24
+    Top = 232
+    Width = 69
+    Height = 13
+    Caption = 'Schullizenz:'
+  end
+  object Label10: TLabel
+    Left = 112
+    Top = 232
+    Width = 288
+    Height = 13
+    Caption = 'Einsatz auf beliebig vielen Rechnern einer Schule,'
+  end
+  object Label11: TLabel
+    Left = 112
+    Top = 248
+    Width = 271
+    Height = 13
+    Caption = 'freie Weitergabe an alle Lehrkräfte und Schüler'
+  end
+  object Label12: TLabel
+    Left = 112
+    Top = 264
+    Width = 82
+    Height = 13
+    Caption = 'dieser Schule.'
+  end
+  object Label13: TLabel
+    Left = 112
+    Top = 288
+    Width = 344
+    Height = 13
+    Caption = 'Einzellizenz nur gegen Vorkasse, Schullizenz auf Rechnung.'
+  end
+  object Label14: TLabel
+    Left = 440
+    Top = 208
+    Width = 45
+    Height = 13
+    Caption = '25 Euro'
+  end
+  object Label15: TLabel
+    Left = 441
+    Top = 264
+    Width = 45
+    Height = 13
+    Caption = '75 Euro'
+  end
+  object Label16: TLabel
+    Left = 32
+    Top = 320
+    Width = 379
+    Height = 13
+    Caption = 'Bestellung im Internet http://www.hupfeld-software.de/bestellung/'
+  end
+  object OKBtn: TButton
+    Left = 355
+    Top = 352
+    Width = 110
+    Height = 25
+    Caption = 'Bitte warten!'
+    TabOrder = 0
+  end
+  object RegistrierBtn: TButton
+    Left = 216
+    Top = 352
+    Width = 113
+    Height = 25
+    BiDiMode = bdLeftToRight
+    Caption = 'Registrierung'
+    ParentBiDiMode = False
+    TabOrder = 1
+    OnClick = RegistrierBtnClick
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 432
+    Top = 32
+  end
+end

@@ -15,11 +15,13 @@
  * along with this program.  If not, see <http:www.gnu.org/licenses/>.
  *)
 
-unit GeoUtil;
+unit Geoutil;
+
+{$MODE Delphi}
 
 interface
 
-uses SysUtils, WinTypes, WinProcs,  Classes, Graphics, Dialogs,
+uses SysUtils, unix,  Classes, Graphics, Dialogs,
      SimObjekt;
 
 procedure ZeichneWolke(x,y:Integer;art:LongInt);
@@ -41,10 +43,14 @@ const r=9;
       s=1;
 begin
   with  ModellEditor.Modell.Canvas do begin
-    Arc(x+r-s,y-r+s,x-s,y+s, x,y,x,y);
+ (*   Arc(x+r-s,y-r+s,x-s,y+s, x,y,x,y);
     Arc(x-r+s,y-r+s,x+s,y+s, x,y,x,y);
     Arc(x-r+s,y+r-s,x+s,y-s, x,y,x,y);
-    Arc(x+r-s,y+r-s,x-s,y-s, x,y,x,y);
+    Arc(x+r-s,y+r-s,x-s,y-s, x,y,x,y);     *)
+    Arc(x+r-s,y-r,x-s,y, 0,5760); //4320);
+    Arc(x-r,y-r,x,y, 0,5760); //4320);
+    Arc(x-r,y+r-s,x,y-s,  0,5760); //4320);
+    Arc(x+r-s,y+r-s,x-s,y-s,  0,5760); //4320);
   end;
 end;
 
@@ -53,8 +59,11 @@ const b=11;h=16;a=5;
 begin
   with ModellEditor.Modell.Canvas do begin
     MoveTo(x,y+a);LineTo(x,y-a);
+    MoveTo(x-1,y+a);LineTo(x-1,y-a);
     MoveTo(x-3,y-a);LineTo(x+3,y-a);
-    Arc(x-b,y-b+h,x+b,y+b+h,x-b,y-b+h,x-b,y-b+h);
+    RoundRect(x-b,y-b+h,x+b,y+b+h,x-b,y-b+h);
+    //Arc(x-b,y-b+h,x+b,y+b+h,x-b,y-b+h,x-b,y-b+h);
+    //Arc(x-b,y-b+h,x+b,y+b+h,0,5760);
   end;
 end;
 
@@ -70,7 +79,7 @@ Begin
   Pts[2].x:=x-7; Pts[2].y:=y+6;
   Pts[3].x:=x-7; Pts[3].y:=y-6;
   Pts[4].x:=x;   Pts[4].y:=y;
-  ModellEditor.Modell.Canvas.PolyLine(pts);
+  ModellEditor.Modell.Canvas.Polyline(pts);
 End;
 
 Procedure PfeilLinks(x,y:integer);
@@ -80,7 +89,7 @@ Begin
   Pts[2].x:=x+7; Pts[2].y:=y+6;
   Pts[3].x:=x+7; Pts[3].y:=y-6;
   Pts[4].x:=x;   Pts[4].y:=y;
-  ModellEditor.Modell.Canvas.PolyLine(pts);
+  ModellEditor.Modell.Canvas.Polyline(pts);
 End;
 
 Procedure PfeilUnten(x,y:integer);
@@ -90,7 +99,7 @@ Begin
   Pts[2].x:=x+7; Pts[2].y:=y-6;
   Pts[3].x:=x-7; Pts[3].y:=y-6;
   Pts[4].x:=x;   Pts[4].y:=y;
-  ModellEditor.Modell.Canvas.PolyLine(pts);
+  ModellEditor.Modell.Canvas.Polyline(pts);
 End;
 
 Procedure PfeilOben(x,y:integer);
@@ -100,7 +109,7 @@ Begin
   Pts[2].x:=x+7; Pts[2].y:=y+6;
   Pts[3].x:=x-7; Pts[3].y:=y+6;
   Pts[4].x:=x;   Pts[4].y:=y;
-  ModellEditor.Modell.Canvas.PolyLine(pts);
+  ModellEditor.Modell.Canvas.Polyline(pts);
 End;
 
 
@@ -161,13 +170,13 @@ begin { ZeichnePfeil }
   if (P[Anfang].x=P[Ende].x) and
                   (P[Anfang].y=P[Ende].y) Then Exit;
   with ModellEditor.Modell do begin
-  //  Canvas.Pen.Mode := pmNotXor;
+    Canvas.Pen.Mode := pmNotXor;
     Canvas.Pen.Color := clBlue;
     Canvas.MoveTo(P[Anfang].x,P[Anfang].y);
     Canvas.LineTo(P[Ende].x,P[Ende].y);
     BerechnePfeilSpitze(Pfeil,P[Anfang].x,P[Anfang].y,
                                     P[Ende].x,P[Ende].y);
-    Canvas.PolyLine(Pfeil);
+    Canvas.Polyline(Pfeil);
  //   ZeichnePfeilAnfang(P[Anfang]);
     end;
 end;
@@ -195,7 +204,7 @@ with ModellEditor.Modell.Canvas do begin
          MoveTo(ex,my+2);
          Lineto(ax-7,my+2);
       End
-      Else {Wolke und Zustand auf unterschiedlischer Höhe}
+      Else {Wolke und Zustand auf unterschiedlischer HÃ¶he}
       Begin
          ex:=Zufluss.right;
          ax:=Abfluss.left+7;
@@ -211,7 +220,7 @@ with ModellEditor.Modell.Canvas do begin
              PfeilUnten(ax,ay)
            End
          Else
-           Begin  { Wolke über dem Zustand }
+           Begin  { Wolke Ã¼ber dem Zustand }
              ay:=Abfluss.bottom;
              MoveTo(ex,my-2);
              Lineto(ax-2,my-2);
@@ -236,7 +245,7 @@ with ModellEditor.Modell.Canvas do begin
          MoveTo(ex,my+2);
          Lineto(ax+6,my+2);
       End
-      Else {Wolke und Zustand auf unterschiedlischer Höhe}
+      Else {Wolke und Zustand auf unterschiedlischer HÃ¶he}
       Begin
          ex:=Zufluss.left;
          ax:=Abfluss.right-7;
@@ -252,7 +261,7 @@ with ModellEditor.Modell.Canvas do begin
              PfeilUnten(ax,ay)
            End
          Else
-           Begin  { Wolke über dem Zustand }
+           Begin  { Wolke Ã¼ber dem Zustand }
              ay:=Abfluss.bottom;
              MoveTo(ex,my-2);
              Lineto(ax+2,my-2);
@@ -290,7 +299,7 @@ with ModellEditor.Modell.Canvas do begin
          MoveTo(ex,my+2);
          Lineto(ax+7,my+2);
       End
-      Else {Wolke und Zustand auf unterschiedlischer Höhe}
+      Else {Wolke und Zustand auf unterschiedlischer HÃ¶he}
       Begin
          ax:=Abfluss.right;
          ex:=Zufluss.left+7;
@@ -306,7 +315,7 @@ with ModellEditor.Modell.Canvas do begin
              PfeilLinks(ax,my)
            End
          Else
-           Begin  { Wolke über dem Zustand }
+           Begin  { Wolke Ã¼ber dem Zustand }
              ey:=Zufluss.bottom;
              MoveTo(ex+2,ey);
              Lineto(ex+2,my+2);
@@ -331,7 +340,7 @@ with ModellEditor.Modell.Canvas do begin
          MoveTo(ex,my+2);
          Lineto(ax-7,my+2);
       End
-      Else {Wolke und Zustand auf unterschiedlischer Höhe}
+      Else {Wolke und Zustand auf unterschiedlischer HÃ¶he}
       Begin
          ax:=Abfluss.left;
          ex:=Zufluss.right-7;
@@ -347,7 +356,7 @@ with ModellEditor.Modell.Canvas do begin
              PfeilRechts(ax,my)
            End
          Else
-           Begin  { Wolke über dem Zustand }
+           Begin  { Wolke Ã¼ber dem Zustand }
              ey:=Zufluss.bottom;
              MoveTo(ex+2,ey);
              Lineto(ex+2,my-2);

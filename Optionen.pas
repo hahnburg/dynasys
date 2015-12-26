@@ -17,11 +17,13 @@
 
 unit Optionen;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, TabNotBk, StdCtrls, Buttons, ComCtrls;
+  SysUtils, unix, Messages, Classes, Graphics, Controls,
+  Forms, Dialogs, (* TabNotBk,*) StdCtrls, Buttons, ComCtrls;
 
 type
   TOptionenDlg = class(TForm)
@@ -41,7 +43,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 end.
  

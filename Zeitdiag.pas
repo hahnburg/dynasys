@@ -20,8 +20,8 @@ unit Zeitdiag;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, ZeitSele,
+  SysUtils, unix, Messages, Classes, Graphics, Controls,
+  Forms, Dialogs, ZeitSelect, LCLType,
   Liste;
 
 type
@@ -43,7 +43,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 procedure TZeitkurveForm.HoleWerte(Zeit:Double);
 var i,j : integer;
     Eintrag   : String[40];

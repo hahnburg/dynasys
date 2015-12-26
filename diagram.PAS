@@ -16,6 +16,9 @@
  *)
 
 unit Diagram;
+
+{$MODE Delphi}
+
 {*
   Zeichnet Zeit-/ Phasendiagramme
   Autor: Walter Hupfeld
@@ -25,7 +28,7 @@ unit Diagram;
 *}
 interface
 
-uses Graphics, Wintypes, WinProcs,Classes, SysUtils,
+uses Graphics, unix, Classes, SysUtils,  LCLType, LCLIntf, IntfGraphics,
      Funktion;
 const maxGraph = 4;
 
@@ -187,8 +190,8 @@ begin
   Canvas:=c;
   w:=width;h:=height;
   for i:=1 to maxGraph do y[i]:=tGraph.create;
-  SetAxisType(0,0);     	{ 0 heiﬂt linear }
-  { Man kˆnnte auch die Autoskalierung benutzen! }
+  SetAxisType(0,0);     	{ 0 hei√üt linear }
+  { Man k√∂nnte auch die Autoskalierung benutzen! }
   dot := false;
   PenStyle := psSolid;
 
@@ -337,9 +340,9 @@ begin
         End;
 	else Begin
           e := NumExp(x2) + 0*1;
-          xmax := xy(10, e);	  { entspricht Aufrunden zur n‰chsten 10er-Potenz }
+          xmax := xy(10, e);	  { entspricht Aufrunden zur n√§chsten 10er-Potenz }
           e := NumExp(x1);
-          xmin := xy(10, e);	  { entspricht Abrunden zur n‰chsten 10er-Potenz }
+          xmin := xy(10, e);	  { entspricht Abrunden zur n√§chsten 10er-Potenz }
           If xmax<=xmin
             then xmin:=xmax/10;
           xlogmin:=log10(xmin);
@@ -353,9 +356,9 @@ begin
           End;
 	  else Begin
             e := NumExp(y2) + 0*1;
-            ymax := xy(10, e);	  { entspricht Aufrunden zur n‰chsten 10er-Potenz }
+            ymax := xy(10, e);	  { entspricht Aufrunden zur n√§chsten 10er-Potenz }
             e := NumExp(y1);
-            ymin := xy(10, e);	  { entspricht Abrunden zur n‰chsten 10er-Potenz }
+            ymin := xy(10, e);	  { entspricht Abrunden zur n√§chsten 10er-Potenz }
             If ymax<=ymin
               then ymin:=ymax/10;
             ylogmin:=log10(ymin);
@@ -449,27 +452,27 @@ End;
 
 procedure tDiagram.CanvasSetTextAngle( d: Word);
 var
-  LogRec: TLOGFONT;     {* Storage area for font information *}
+  LogRec: TLogFont;     {* Storage area for font information *}
 begin
-  GetObject(canvas.Font.Handle,SizeOf(LogRec),Addr(LogRec));
-  LogRec.lfEscapement := d;
-  canvas.Font.Handle := CreateFontIndirect(LogRec);
+ // GetObject(canvas.Font.Handle,SizeOf(LogRec),Addr(LogRec));
+//  LogRec.lfEscapement := d;
+//  canvas.Font.Handle := CreateFontIndirect(LogRec);
 end;
 
 
 procedure tDiagram.CanvasTextOutAngle( x,y: Integer; d: Word; s: string);
-var
-  LogRec: TLOGFONT;     {* Storage area for font information *}
-  OldFontHandle,        {* The old font handle *}
-  NewFontHandle: HFONT; {* Temporary font handle *}
+//var
+  //LogRec: TLogFont;     {* Storage area for font information *}
+  //OldFontHandle,        {* The old font handle *}
+  //NewFontHandle: HFONT; {* Temporary font handle *}
 begin
-  GetObject(canvas.Font.Handle, SizeOf(LogRec), Addr(LogRec));
-  LogRec.lfEscapement := d;
-  NewFontHandle := CreateFontIndirect(LogRec);
-  OldFontHandle := SelectObject(canvas.Handle,NewFontHandle);
+ // GetObject(canvas.Font.Handle, SizeOf(LogRec), Addr(LogRec));
+//  LogRec.lfEscapement := d;
+//  NewFontHandle := canvas.Font.CreateHandle(); //CreateFontIndirect(LogRec);
+//  OldFontHandle := SelectObject(canvas.Handle,NewFontHandle);
   Canvas.TextOut(x,y,s);
-  NewFontHandle := SelectObject(canvas.Handle,OldFontHandle);
-  DeleteObject(NewFontHandle);
+//  NewFontHandle := SelectObject(canvas.Handle,OldFontHandle);
+//  DeleteObject(NewFontHandle);
 end;
 
 
@@ -741,7 +744,7 @@ end;
 procedure tDiagram.TitleYAxis(const s : String; Pos : Byte);
 { Pos 0:links  1: rechts}
 begin
-// muss ¸berarbeitet werden.
+// muss √ºberarbeitet werden.
   CanvasSetTextAngle(900);
   If pos=0 then
     canvas.Textout(2,yp(yMittel(ymin,ymax))+Canvas.TextWidth(s) div 2,s)
@@ -929,7 +932,7 @@ begin
     Pen.Color :=cl;
     i:=0;
     m:=yi.count;
-    g:=round(1+(wmax+hmax)/500);	{ Grˆﬂe abh‰ngig von Fenstergrˆﬂe }
+    g:=round(1+(wmax+hmax)/500);	{ Gr√∂√üe abh√§ngig von Fenstergr√∂√üe }
     While (i<=m) Do begin
        xpix:=xp(yi.items[i].x);
        ypix:=yp(yi.items[i].y);
@@ -962,7 +965,7 @@ begin
     Brush.Color := cl;
     FillRect(NewRect);
     Brush.Color:=Oldcl;
-    { Oldcl eigentlich ¸berfl¸ssig und falsch!! }
+    { Oldcl eigentlich √ºberfl√ºssig und falsch!! }
     Brush.Color:=cl;
   end
 end;

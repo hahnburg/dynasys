@@ -20,7 +20,7 @@ unit Gleichun;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
+  SysUtils, unix, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls,
   Liste, SimObjek, ObjDial;
 
@@ -43,7 +43,7 @@ implementation
 
 uses DynaMain;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TGleichungen.FillListbox;
 Var i,j:integer;

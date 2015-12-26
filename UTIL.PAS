@@ -17,6 +17,8 @@
 
 unit Util;
 
+{$MODE Delphi}
+
 interface
 
 uses SysUtils, Classes;
@@ -36,7 +38,7 @@ procedure StrGross(var Str:String);
 
 implementation
 
-uses Simobjekt;
+uses SimObjekt;
 
 procedure TPunkt.init(x,y:double);
 begin
@@ -46,9 +48,9 @@ end;
 
 procedure StrGross(var Str:String);
 Begin
-  While Pos('ä',Str)>0 do Str[Pos('ä',Str)]:='Ä';
-  While Pos('ö',Str)>0 do Str[Pos('ö',Str)]:='Ö';
-  While Pos('ü',Str)>0 do Str[Pos('ü',Str)]:='Ü';
+//  While Pos('Ã¤',Str)>0 do Str[Pos('Ã¤',Str)]:='Ã„';
+//  While Pos('Ã¶',Str)>0 do Str[Pos('Ã¶',Str)]:='Ã–';
+//  While Pos('Ã¼',Str)>0 do Str[Pos('Ã¼',Str)]:='Ãœ';
   Str:=UpperCase(Str);
 End;
 
@@ -58,12 +60,14 @@ function NameKorrekt(Name:String):Boolean;
      i:Integer;
  Begin
    If (Length(Name)<1) then begin Namekorrekt:=false; Exit end;
-   If not (Name[1] in ['a'..'z','ä','ü','ö','ß','A'..'Z','Ä','Ü','Ö']) then
+//   If not (Name[1] in ['a'..'z','Ã¤','Ã¼','Ã¶','ÃŸ','A'..'Z','Ã„','Ãœ','Ã–']) then
+   If not (Name[1] in ['a'..'z','A'..'Z']) then
      Begin NameKorrekt:=False; Exit End;
    Korrekt:=true;
    For i:=1 to Length(Name) Do
       korrekt:=Korrekt and
-        ( Name[i] in ['a'..'z','ä','ü','ö','ß','A'..'Z','Ä','Ü','Ö','_','0'..'9']);
+//      ( Name[i] in ['a'..'z','Ã¤','Ã¼','Ã¶','ÃŸ','A'..'Z','Ã„','Ãœ','Ã–','_','0'..'9']);
+        ( Name[i] in ['a'..'z','A'..'Z','_','0'..'9']);
    Namekorrekt:=korrekt;
  End;
 

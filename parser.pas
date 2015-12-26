@@ -17,9 +17,11 @@
 
 Unit Parser;
 
+{$MODE Delphi}
+
 interface
 
-uses SysUtils,WinTypes, Classes, Dialogs,
+uses SysUtils, unix, Classes, Dialogs,
      Util;
 
 type
@@ -46,7 +48,7 @@ type
           errAusdruck,   (* Arithmetischer Ausdruck erwartet *)
           errOperator,   (* Operator erwartet *)
           errXtbf,       (* Tabellenfunktion fehlerhaft *)
-          errXtbf2,      (* Tabellenfunktion muﬂ sortiert sein *)
+          errXtbf2,      (* Tabellenfunktion mu√ü sortiert sein *)
           errEmpty,      (* Leere Eingabe *)
           errKommentar,  (* Kommentarklammer fehlt *)
           errRelation,   (* Relation falsch *)
@@ -198,7 +200,7 @@ END ;
 
 Function TParser.Buchstabe(z: CHAR): BOOLEAN;
 BEGIN
-    Buchstabe:= (('A' <= z) AND (z <= 'Z')) or (z='_') or (z='ƒ') or (z='÷') or (z='‹') or (z='ﬂ')
+    Buchstabe:= (('A' <= z) AND (z <= 'Z')) or (z='_') or (z='√Ñ') or (z='√ñ') or (z='√ú') or (z='√ü')
 END;
 
 Function TParser.AlphaNum(z: CHAR): BOOLEAN;

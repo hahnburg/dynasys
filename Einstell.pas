@@ -17,15 +17,17 @@
 
 unit Einstell;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, TabNotBk, StdCtrls, Buttons;
+  SysUtils, unix, Messages, Classes, Graphics, Controls,
+  Forms, Dialogs, (* TabNotBk ,*) StdCtrls, Buttons;
 
 type
   TEinstellDlg = class(TForm)
-    TabbedNotebook1: TTabbedNotebook;
+    //TabbedNotebook1: TTabbedNotebook;
     OKBtn: TBitBtn;
     CancelBtn: TBitBtn;
     HelpBtn: TBitBtn;
@@ -40,7 +42,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 end.
  

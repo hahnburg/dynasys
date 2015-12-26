@@ -19,7 +19,7 @@ Unit EingabeDlg;
 
 interface
 
-uses WinProcs, WinTypes, Objects, OWindows, ODialogs,Strings, WinDlgs,WinDos,
+uses unix, Objects, OWindows, ODialogs,Strings, WinDlgs,WinDos,
      Status, SimObjekt, Parser, ObjektListe, NumerikParameter, Tabelleneditor;
 
 

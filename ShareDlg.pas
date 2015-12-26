@@ -17,9 +17,11 @@
 
 unit ShareDlg;
 
+{$MODE Delphi}
+
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, Buttons,
+uses unix, Classes, Graphics, Forms, Controls, Buttons,
   StdCtrls, ExtCtrls, SysUtils, Dialogs, RegDialog;
 
 type
@@ -61,7 +63,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TSharewareDlg.Timer1Timer(Sender: TObject);
 begin
@@ -85,7 +87,7 @@ end;
 
 procedure TSharewareDlg.BestellBtnClick(Sender: TObject);
 begin
-  WinExec('wordpad.exe',SW_SHOWNORMAL);
+  //WinExec('wordpad.exe',SW_SHOWNORMAL);
 end;
 
 

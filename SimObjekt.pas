@@ -17,13 +17,15 @@
 
 Unit SimObjekt;
 
+{$MODE Delphi}
+
 interface
 
-uses SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Dialogs,
-     Parser;
+uses SysUtils, unix, Forms, Messages, Classes, Graphics, Dialogs,  LCLType,
+     LCLProc, Parser, LCLIntf;
      (*Status,*) (*,NumerikParameter*)
 
-Const Radius = 22;  { Größe des Kreis für Zustandsgrößen/Parameter }
+Const Radius = 22;  { GrÃ¶ÃŸe des Kreis fÃ¼r ZustandsgrÃ¶ÃŸen/Parameter }
       Hoehe  = 22;
       Breite = 32;
 
@@ -41,7 +43,7 @@ Const Radius = 22;  { Größe des Kreis für Zustandsgrößen/Parameter }
       WirkPfeilID= -1;
       WolkeID    = -2;
 
-      { Konstanten für Tabellenfunktion }
+      { Konstanten fÃ¼r Tabellenfunktion }
       NoTab      = 0;
       EditTab    = 1;
       FileTab    = 2;
@@ -56,6 +58,8 @@ Type
    TPunktFeld =  Array [PunktIndex] of TPoint;
    PfeilModus = (pGerade,pNeu,pLoesche,pVerschiebe);
 
+   TSimuObjekt = class; //forward declaration
+  // Simo =   Record zgr:TSimuObjekt; index:Integer End;
    TSimuObjekt = class(TPersistent)
                Procedure   Init(x,y:Integer;AName:NameStr);  virtual;
                Procedure   Zeichne;                          virtual;  abstract;
@@ -241,7 +245,7 @@ End;
 
 procedure TSimuObjekt.Init(x,y:Integer;AName:NameStr);
 Begin
-  Key:=-1;     { muß überschrieben werden }
+  Key:=-1;     { muÃŸ Ã¼berschrieben werden }
   Name:=AName;
   Eingabe:='';
   gueltig:=False;
@@ -531,7 +535,7 @@ Var P : TSimuObjekt;
 Begin
   IF not geloescht Then Begin
     inherited loesche;
-    {Referenzen auflösen }
+    {Referenzen auflÃ¶sen }
     for i:=1 to ZuflussMax Do Begin
       P:=ZuFluesse[i].zgr;
       P.Loesche;
@@ -548,7 +552,7 @@ End;
 Procedure   TZustandObjekt.Verschiebe(dx,dy:Integer);
 Var i : integer;
 Begin
-{ Zuflüsse aus Quellen und Senken (Wolke) werden auch verschoben }
+{ ZuflÃ¼sse aus Quellen und Senken (Wolke) werden auch verschoben }
    For i:=1 to ZuFlussMax Do
       With  Zufluesse[i].zgr do
         if ((key=VentilId) and not selected)  Then Begin
@@ -750,7 +754,8 @@ Begin
   with ModellEditor.Modell.Canvas do begin
     if EingangMax=0 then Pen.Color:=clRed;
     with Position do begin
-      Arc(left,top,right,bottom,left,top,left,top);
+     RoundRect(left,top,right,bottom,left,top);
+//      Arc(left,top,right,bottom,left,top,left,top);
       if xtbf=EditTab then
          TextOut(Mitte.x-TextWidth('~') div 2,
                               Mitte.y-TextHeight('~')div 2,'~');
@@ -954,7 +959,7 @@ end;
 procedure TVentilObjekt.Load(Var s:TReader);
 Begin
   inherited Load(S);
-  Breite:=40;Hoehe:=30;   { nur für alte Modelle }
+  Breite:=40;Hoehe:=30;   { nur fÃ¼r alte Modelle }
   S.Read(ZuflussIndex,SizeOf(ZuflussIndex));
   S.Read(AbflussIndex,SizeOf(AbflussIndex));
   With Position do Begin
@@ -1106,7 +1111,7 @@ procedure TWirkPfeilObjekt.Zeichne;
 begin
   if not geloescht then begin
     (*P[Anfang]:=BestimmeKreisPunkt(von.Mitte,nach.Mitte);
-    P[Ende]:=BestimmeKreisPunkt(nach.Mitte,von.Mitte);*)
+    P[Ende]:=BestimmeKreisPunkt(nach.Mitte,von.Mitte);  *)
     ZeichnePfeil(P,pNeu);
   end;
 end;
@@ -1277,8 +1282,8 @@ pNeu :
                                                P[Ende].x,P[Ende].y);
       //Canvas.brush.color:=clBlue;
       //Canvas.brush.style:=bsSolid;
-      Canvas.PolyLine(Pfeil);
-       Canvas.PolyLine(PolyNeu);
+      Canvas.Polyline(Pfeil);
+       Canvas.Polyline(PolyNeu);
        //ZeichnePfeilAnfang(P[Anfang]);
        //ZeichnePfeilMitte(PolyNeu[10]);
        PolyAlt:=PolyNeu;
@@ -1293,22 +1298,22 @@ pVerschiebe:
           BerechneBezier(i,XX,YY);
           PolyNeu[i]:=Point(round(XX),round(YY));
        end;
-       Canvas.PolyGon(Pfeil);
-       Canvas.PolyLine(PolyAlt);
+       Canvas.Polygon(Pfeil);
+       Canvas.Polyline(PolyAlt);
        //ZeichnePfeilAnfang(PMalt);
        BerechnePfeilSpitze(Pfeil,PolyNeu[steps-2].x,PolyNeu[steps-2].y,
                                                P[Ende].x,P[Ende].y);
-       Canvas.PolyLine(PolyNeu);
-       Canvas.PolyLine(Pfeil);
+       Canvas.Polyline(PolyNeu);
+       Canvas.Polyline(Pfeil);
        //ZeichnePfeilAnfang(P[Anfang]);
        PolyAlt:=PolyNeu;
        PMAlt:=P[Anfang];
      end;
 pLoesche:
      begin
-       Canvas.PolyLine(PolyAlt);
+       Canvas.Polyline(PolyAlt);
        //ZeichnePfeilAnfang(PMalt);
-       Canvas.PolyGon(Pfeil);
+       Canvas.Polygon(Pfeil);
      end;
     end;
         Canvas.Pen.Color:=clBlack;

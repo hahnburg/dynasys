@@ -17,10 +17,12 @@
 
 unit Liste;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, 
+  SysUtils, unix, Messages, Types, Classes,
   SimObjekt, Dialogs;
 
 type

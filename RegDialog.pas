@@ -17,9 +17,11 @@
 
 unit RegDialog;
 
+{$MODE Delphi}
+
 interface
 
-uses SysUtils, WinTypes, WinProcs, Classes, Graphics, Forms, Controls, Buttons,
+uses SysUtils, unix, Classes, Graphics, Forms, Controls, Buttons,
   StdCtrls, ExtCtrls, Dialogs, IniFiles, Register;
 
 type
@@ -50,7 +52,7 @@ var
 implementation
 uses DynaMain;
 
-{$R *.DFM}
+{$R *.lfm}
 
 procedure TRegisterDlg.OKBtnClick(Sender: TObject);
 var  DynasysIni  : TIniFile;
@@ -58,8 +60,8 @@ var  DynasysIni  : TIniFile;
 begin
   MainForm.Registriert:=LicenceOK(RegNummer.Text,RegName.text,RegStrasse.text,RegOrt.text);
   If MainForm.Registriert Then Begin
-    MessageDlg('Registrierung korrekt ausgeführt.'+
-    #13+#10+'Beim nächsten Programmstart meldet sich Dynasys als registrierte Version.',
+    MessageDlg('Registrierung korrekt ausgefÃ¼hrt.'+
+    #13+#10+'Beim nÃ¤chsten Programmstart meldet sich Dynasys als registrierte Version.',
     mtInformation,[mbOk],0);
   end
   Else

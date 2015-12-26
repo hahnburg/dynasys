@@ -17,13 +17,18 @@
 
 unit GraphWin;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, StdCtrls, Buttons, ColorGrd, Menus, Printers, ClipBrd, Dialogs,
+  SysUtils, unix, Messages, Classes, Graphics, Controls,
+  Forms, StdCtrls, Buttons, LCLType, Menus, Printers, ClipBrd, Dialogs,
   ExtCtrls,
-  Funktion,ZeitSelect, Liste, Diagram, Numerik;
+  Funktion, ZeitSelect,
+  Liste,
+  Diagram,
+  Numerik;
 
 
 type
@@ -82,7 +87,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.lfm}
 
 
 (* ====================================================================== *)
@@ -107,7 +112,7 @@ begin
 
       end;
   except
-    MessageDlg('Fehler beim Öffnen des Dialogs!',mtError,[mbok],0);
+    MessageDlg('Fehler beim Ã–ffnen des Dialogs!',mtError,[mbok],0);
   end;
 
 
@@ -119,8 +124,10 @@ begin
   Image.Picture.Graphic := Bitmap;
   Diagram:=TDiagram.create;
   Diagram.init(Image.canvas,Bitmap.height,Bitmap.width,1);
-  With NumerikDlg do
+
+With NumerikDlg do
     Diagram.SetPlotArea(Startzeit,0.02,Endzeit,20);
+
   xlog1.Checked:=Diagram.xtyp=1;
   ylog1.Checked:=Diagram.ytyp=1;
 
@@ -161,7 +168,7 @@ procedure TGraphForm.FormResize(Sender: TObject);
 var
   ARect: TRect;
 begin
-  { Größen anpassen }
+  { GrÃ¶ÃŸen anpassen }
   if Width<300
 	then Width:=300;
   if Height<200
@@ -170,7 +177,7 @@ begin
   Image.Picture.Graphic.Height :=Image.Height;
   with Image.Canvas do
   begin
-    { Zeichenfläche löschen }
+    { ZeichenflÃ¤che lÃ¶schen }
     CopyMode := cmWhiteness;
     ARect := Rect(0, 0, Image.Width, Image.Height);
     CopyRect(ARect, Image.Canvas, ARect);

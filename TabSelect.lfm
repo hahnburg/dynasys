@@ -1,0 +1,231 @@
+object TabelleDlg: TTabelleDlg
+  Left = 708
+  Height = 318
+  Top = 101
+  Width = 489
+  ActiveControl = OKBtn
+  BorderStyle = bsDialog
+  Caption = 'Mehrseitiger Dialog'
+  ClientHeight = 318
+  ClientWidth = 489
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  OnPaint = FormPaint
+  LCLVersion = '1.4.4.0'
+  object ButtonPanel: TPanel
+    Left = 404
+    Height = 318
+    Top = 0
+    Width = 85
+    Align = alRight
+    BevelOuter = bvNone
+    ClientHeight = 318
+    ClientWidth = 85
+    TabOrder = 0
+    object OKBtn: TBitBtn
+      Left = 1
+      Height = 27
+      Top = 12
+      Width = 77
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      Margin = 2
+      ModalResult = 1
+      Spacing = -1
+      TabOrder = 0
+    end
+    object CancelBtn: TBitBtn
+      Left = 1
+      Height = 27
+      Top = 46
+      Width = 77
+      Caption = 'Abbruch'
+      Kind = bkCancel
+      Margin = 2
+      Spacing = -1
+      TabOrder = 1
+    end
+    object HelpBtn: TBitBtn
+      Left = 1
+      Height = 27
+      Top = 82
+      Width = 77
+      Caption = '&Hilfe'
+      Kind = bkHelp
+      Margin = 2
+      Spacing = -1
+      TabOrder = 2
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 8
+    Height = 280
+    Top = 8
+    Width = 385
+    ActivePage = TabSheet1
+    TabIndex = 0
+    TabOrder = 1
+    object TabSheet1: TTabSheet
+      Caption = 'Variablen'
+      ClientHeight = 241
+      ClientWidth = 379
+      object GroupBox1: TGroupBox
+        Left = 8
+        Height = 252
+        Top = 4
+        Width = 361
+        Caption = 'Variablenliste'
+        ClientHeight = 232
+        ClientWidth = 353
+        TabOrder = 0
+        object SrcLabel: TLabel
+          Left = 16
+          Height = 16
+          Top = 24
+          Width = 145
+          AutoSize = False
+          Caption = 'Verfügbare Variablen:'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object DstLabel: TLabel
+          Left = 200
+          Height = 16
+          Top = 24
+          Width = 145
+          AutoSize = False
+          Caption = 'Dargestellte Variablen:'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object IncludeBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 56
+          Width = 24
+          Caption = '>'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = IncludeBtnClick
+          ParentFont = False
+        end
+        object IncAllBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 88
+          Width = 24
+          Caption = '>>'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = IncAllBtnClick
+          ParentFont = False
+        end
+        object ExcludeBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 120
+          Width = 24
+          Caption = '<'
+          Enabled = False
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = ExcludeBtnClick
+          ParentFont = False
+        end
+        object ExAllBtn: TSpeedButton
+          Left = 168
+          Height = 24
+          Top = 152
+          Width = 24
+          Caption = '<<'
+          Enabled = False
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          OnClick = ExAllBtnClick
+          ParentFont = False
+        end
+        object SrcList: TListBox
+          Left = 16
+          Height = 160
+          Top = 48
+          Width = 144
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ItemHeight = 0
+          MultiSelect = True
+          ParentFont = False
+          TabOrder = 0
+        end
+        object DstList: TListBox
+          Left = 200
+          Height = 160
+          Top = 48
+          Width = 144
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ItemHeight = 0
+          MultiSelect = True
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Darstellen'
+      ClientHeight = 0
+      ClientWidth = 0
+      ImageIndex = 1
+      object GroupBox2: TGroupBox
+        Left = 8
+        Height = 209
+        Top = 8
+        Width = 361
+        Caption = 'Darstellung'
+        ClientHeight = 189
+        ClientWidth = 353
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 24
+          Height = 13
+          Top = 34
+          Width = 179
+          Caption = 'Anzahl der Nachkommastellen: '
+          ParentColor = False
+        end
+        object SpinEdit1: TSpinEdit
+          Left = 216
+          Height = 22
+          Top = 28
+          Width = 65
+          MaxValue = 10
+          TabOrder = 0
+          Value = 2
+        end
+      end
+    end
+  end
+end

@@ -17,6 +17,8 @@
 
 unit ModEditor;
 
+{$MODE Delphi}
+
 (*
   Dynasys Modelleditor (Formular)
   mit eigenem Algorithmus zur Berechnung von Bezierkurven
@@ -28,9 +30,9 @@ unit ModEditor;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, Buttons, ExtCtrls,StdCtrls,
-  SimObjekt, Liste, Menus, GeoUtil, ObjectDlg, Util, ErrorTxt, TabEdit;
+  SysUtils, unix, Messages, Classes, Graphics, Controls,  LCLType,
+  Forms, Dialogs, Buttons, ExtCtrls,StdCtrls, LResources, LCLResCache,
+  SimObjekt, Liste, Menus, GEOUTIL, ObjectDlg, UTIL, ErrorTxt, TabEdit;
 
 const
   crVentil = 5;
@@ -122,7 +124,7 @@ implementation
 
 uses DynaMain;
 
-{$R *.DFM}
+{$R *.lfm}
 
 function TModelleditor.OhneNamen:Str20;
 var ZahlStr  : String[5];
@@ -134,8 +136,8 @@ end;
 
 procedure TModelleditor.FormCreate(Sender: TObject);
 begin
-  Screen.Cursors[crVentil] := LoadCursor(hInstance, 'VENTILCURSOR');
-  cursor:=crVentil;
+  //todo Screen.Cursors[crVentil] := LoadCursor(hInstance, 'VENTILCURSOR');
+  // cursor:=crVentil;
   ObjektListe:=TObjektListe.create;
   Werkzeug:=wzStandard;
   StandardBtn.down:=true;
@@ -198,6 +200,7 @@ begin
         Zustand.Zeichne;
         Zustand.selected:=true;
         Zustand.ZeichneMarkierung;
+        Modell.Invalidate;
       end;
     wzWert:
       begin
@@ -208,6 +211,7 @@ begin
         Wert.selected:=true;
         Wert.ZeichneMarkierung;
         ObjektListe.add(Wert);
+        Modell.Invalidate;
       end;
    wzWirkung:
      begin
@@ -222,7 +226,8 @@ begin
         Punkte[Ende]:=ZiehPkt;
         Modell.Canvas.Pen.Mode := pmNotXor;
         GeoUtil.ZeichnePfeil(Punkte);
-      end
+        Modell.Invalidate;
+      end;
      end;
    wzVentil:
      begin
@@ -252,6 +257,7 @@ begin
           Wolke:=true;
           ZeichneVentilFlag:=true;
         end;
+       Modell.Invalidate;
      end;
    wzStandard:
       if ObjektListe.ObjektunterMaus(x,y,obj) then
@@ -264,7 +270,7 @@ begin
                  ZeichenObj:=obj as TWirkPfeilObjekt;
                end
          end else
-           begin { nicht ausgew‰hlt }
+           begin { nicht ausgew√§hlt }
              if not(ssShift in shift) then ObjektListe.LoescheAlleMarkierungen;
              obj.ZeichneMarkierung;
              obj.selected:=not obj.selected;
@@ -595,7 +601,7 @@ begin
           Begin
 
             If StrComp(SimObj^.Name,ObjName)<>0 Then Begin
-              {Objekt mit Wirkverbindung ung¸ltig erkl‰ren }
+              {Objekt mit Wirkverbindung ung√ºltig erkl√§ren }
               For i:=1 To SimObj^.AusgangMax do Begin
                 If Not Ersetze_Namen(PWirkPfeilObjekt(SimObj^.Ausgaenge[i].zgr)^.nach,SimObj^.Name,ObjName) Then
                    PWirkPfeilObjekt(SimObj^.Ausgaenge[i].zgr)^.nach^.gueltig:=False;

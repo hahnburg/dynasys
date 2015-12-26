@@ -16,15 +16,18 @@
  *)
 
 unit TabEdit;
+
+{$MODE Delphi}
+
 (*
-   Tabelleneditor für graphische Eingabe
+   Tabelleneditor fÃ¼r graphische Eingabe
    Version: 2.0
 *)
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  unix, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ExtCtrls,
   SimObjekt,ErrorTxt,Util;
 
@@ -80,7 +83,7 @@ var
 
 implementation
 
-{$R *.dfm}
+{$R *.lfm}
 
    procedure TTabEditForm.init(obj:TSimuObjekt);
    var i : integer;
